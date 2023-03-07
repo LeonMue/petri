@@ -1,0 +1,103 @@
+options {
+    STATIC = false;
+}
+
+PARSER_BEGIN(Petri)
+package org.dhbw.ka.ml;
+import java.util.ArrayList;
+import java.util.List;
+public class Petri {
+    public static void main(String[] args) throws ParseException {
+    }
+}
+PARSER_END(Petri)
+
+
+
+SKIP : {
+    " "
+|   "\r"
+|   "\t"
+|   "\n"
+}
+
+SPECIAL_TOKEN : {
+    < ONE_LINE_COMMENT: "#" (~["\n"])* "\n" >
+}
+
+TOKEN : {
+    < MESSAGE: "message" >
+|   < BOOL: "bool" >
+|   < INT: "int" >
+|   < FLOAT: "float" >
+|   < DOUBLE: "double" >
+|   < STRING: "string" >
+|   < LIST: "List" >
+}
+
+TOKEN : {
+    < DIGITS: (<DIGIT>)+ >
+|   < ID: (("_")+ (<DIGIT>|<LETTER>) (<ID_ANY>)* | <DIGITS> (<LETTER>|"_") (<ID_ANY>)* | <LETTER> (<ID_ANY>)*) >
+|   < DIGIT: ["0"-"9"] >
+|   < LETTER: ["a"-"z","A"-"Z"] >
+|   < ID_ANY: (<DIGIT>|<LETTER>|"_") >
+}
+
+void root():
+{
+}
+{
+    complex_types() <EOF>
+}
+
+void complex_types():
+{}
+{
+    complex_type() complex_types()
+    |
+    empty()
+}
+
+void complex_type():
+{}
+{
+    message()
+}
+
+void message():
+{
+}
+{
+    <MESSAGE> <ID> (":" <ID>)? "{" fields() "}"
+}
+
+void fields():
+{}
+{
+    field() fields()
+    |
+    empty()
+}
+
+void field():
+{}
+{
+    type_identifier() <ID> "=" <DIGITS> ";"
+}
+
+void type_identifier():
+{}
+{
+    primitive_type() // | <ID> | <LIST> "<" type_identifier() ">"
+}
+
+void primitive_type():
+{}
+{
+    <BOOL> | <INT> | <FLOAT> | <DOUBLE> | <STRING>
+}
+
+JAVACODE
+void empty() {
+    // skip production
+}

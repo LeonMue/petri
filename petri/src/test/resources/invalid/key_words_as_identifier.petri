@@ -1,0 +1,5 @@
+# it is invalid to use a key word as identifier
+message message {
+    string string = 0;
+    int int = 1;
+}
