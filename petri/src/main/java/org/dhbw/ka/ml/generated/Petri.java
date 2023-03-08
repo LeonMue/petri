@@ -5,20 +5,19 @@ public class Petri implements PetriConstants {
     }
 
   final public void root() throws ParseException {
-    complex_types();
-    jj_consume_token(0);
-  }
-
-  final public void complex_types() throws ParseException {
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case MESSAGE:
+    label_1:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case MESSAGE:
+        ;
+        break;
+      default:
+        jj_la1[0] = jj_gen;
+        break label_1;
+      }
       complex_type();
-      complex_types();
-      break;
-    default:
-      jj_la1[0] = jj_gen;
-      empty();
     }
+    jj_consume_token(0);
   }
 
   final public void complex_type() throws ParseException {
@@ -38,24 +37,23 @@ public class Petri implements PetriConstants {
       ;
     }
     jj_consume_token(19);
-    fields();
-    jj_consume_token(20);
-  }
-
-  final public void fields() throws ParseException {
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case BOOL:
-    case INT:
-    case FLOAT:
-    case DOUBLE:
-    case STRING:
+    label_2:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case BOOL:
+      case INT:
+      case FLOAT:
+      case DOUBLE:
+      case STRING:
+        ;
+        break;
+      default:
+        jj_la1[2] = jj_gen;
+        break label_2;
+      }
       field();
-      fields();
-      break;
-    default:
-      jj_la1[2] = jj_gen;
-      empty();
     }
+    jj_consume_token(20);
   }
 
   final public void field() throws ParseException {
@@ -92,9 +90,6 @@ public class Petri implements PetriConstants {
       jj_consume_token(-1);
       throw new ParseException();
     }
-  }
-
-  void empty() throws ParseException {
   }
 
   /** Generated Token Manager. */

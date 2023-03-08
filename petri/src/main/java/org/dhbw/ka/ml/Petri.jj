@@ -45,15 +45,7 @@ void root():
 {
 }
 {
-    complex_types() <EOF>
-}
-
-void complex_types():
-{}
-{
-    complex_type() complex_types()
-    |
-    empty()
+    (complex_type())* <EOF>
 }
 
 void complex_type():
@@ -66,15 +58,7 @@ void message():
 {
 }
 {
-    <MESSAGE> <ID> (":" <ID>)? "{" fields() "}"
-}
-
-void fields():
-{}
-{
-    field() fields()
-    |
-    empty()
+    <MESSAGE> <ID> (":" <ID>)? "{" (field())* "}"
 }
 
 void field():
@@ -93,9 +77,4 @@ void primitive_type():
 {}
 {
     <BOOL> | <INT> | <FLOAT> | <DOUBLE> | <STRING>
-}
-
-JAVACODE
-void empty() {
-    // skip production
 }
