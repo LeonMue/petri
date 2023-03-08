@@ -1,7 +1,7 @@
 package org.dhbw.ka.ml.petri.syntax;
 
-import org.dhbw.ka.ml.ParseException;
-import org.dhbw.ka.ml.Petri;
+import org.dhbw.ka.ml.generated.ParseException;
+import org.dhbw.ka.ml.generated.Petri;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

@@ -3,7 +3,7 @@ options {
 }
 
 PARSER_BEGIN(Petri)
-package org.dhbw.ka.ml;
+package org.dhbw.ka.ml.generated;
 public class Petri {
     public static void main(String[] args) throws ParseException {
     }
