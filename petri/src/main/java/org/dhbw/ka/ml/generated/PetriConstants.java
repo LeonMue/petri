@@ -27,15 +27,15 @@ public interface PetriConstants {
   /** RegularExpression Id. */
   int LIST = 12;
   /** RegularExpression Id. */
-  int DIGITS = 13;
+  int DIGIT = 13;
   /** RegularExpression Id. */
-  int ID = 14;
+  int DIGITS = 14;
   /** RegularExpression Id. */
-  int DIGIT = 15;
+  int LETTER = 15;
   /** RegularExpression Id. */
-  int LETTER = 16;
+  int ID_ANY = 16;
   /** RegularExpression Id. */
-  int ID_ANY = 17;
+  int ID = 17;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -55,11 +55,11 @@ public interface PetriConstants {
     "\"double\"",
     "\"string\"",
     "\"List\"",
-    "<DIGITS>",
-    "<ID>",
     "<DIGIT>",
+    "<DIGITS>",
     "<LETTER>",
     "<ID_ANY>",
+    "<ID>",
     "\":\"",
     "\"{\"",
     "\"}\"",

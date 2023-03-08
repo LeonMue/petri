@@ -34,11 +34,11 @@ TOKEN : {
 }
 
 TOKEN : {
-    < DIGITS: (<DIGIT>)+ >
+    < #DIGIT: ["0"-"9"] >
+|   < DIGITS: (<DIGIT>)+ >
+|   < #LETTER: ["a"-"z","A"-"Z"] >
+|   < #ID_ANY: (<DIGIT>|<LETTER>|"_") >
 |   < ID: (("_")+ (<DIGIT>|<LETTER>) (<ID_ANY>)* | <DIGITS> (<LETTER>|"_") (<ID_ANY>)* | <LETTER> (<ID_ANY>)*) >
-|   < DIGIT: ["0"-"9"] >
-|   < LETTER: ["a"-"z","A"-"Z"] >
-|   < ID_ANY: (<DIGIT>|<LETTER>|"_") >
 }
 
 void root():
