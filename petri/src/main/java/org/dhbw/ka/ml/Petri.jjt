@@ -1,4 +1,5 @@
 options {
+    MULTI = true;
     STATIC = false;
 }
 
@@ -9,8 +10,6 @@ public class Petri {
     }
 }
 PARSER_END(Petri)
-
-
 
 SKIP : {
     " "
@@ -41,14 +40,14 @@ TOKEN : {
 |   < ID: (("_")+ (<DIGIT>|<LETTER>) (<ID_ANY>)* | <DIGITS> (<LETTER>|"_") (<ID_ANY>)* | <LETTER> (<ID_ANY>)*) >
 }
 
-void root():
+ASTroot root():
 {
 }
 {
-    (complex_type())* <EOF>
+    (complex_type())* <EOF> { return jjtThis; }
 }
 
-void complex_type():
+void complex_type() :
 {}
 {
     message()
