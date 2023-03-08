@@ -4,8 +4,6 @@ options {
 
 PARSER_BEGIN(Petri)
 package org.dhbw.ka.ml;
-import java.util.ArrayList;
-import java.util.List;
 public class Petri {
     public static void main(String[] args) throws ParseException {
     }
