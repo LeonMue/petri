@@ -2,7 +2,19 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY= */
 package org.dhbw.ka.ml.generated;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class ASTfield extends SimpleNode {
+
+  String typeIdent;
+  String fieldIdent;
+  int fieldNumber;
   public ASTfield(int id) {
     super(id);
   }

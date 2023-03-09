@@ -5,8 +5,20 @@ options {
 
 PARSER_BEGIN(Petri)
 package org.dhbw.ka.ml.generated;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Paths;
 public class Petri {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException, IOException {
+        var path = Paths.get("src", "test", "resources", "valid", "more_complex.petri");
+        var parser = new Petri(new BufferedReader(new FileReader(path.toFile())));
+        try {
+            var node = parser.root();
+            node.dump("");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 PARSER_END(Petri)
@@ -40,14 +52,14 @@ TOKEN : {
 |   < ID: (("_")+ (<DIGIT>|<LETTER>) (<ID_ANY>)* | <DIGITS> (<LETTER>|"_") (<ID_ANY>)* | <LETTER> (<ID_ANY>)*) >
 }
 
-ASTroot root():
+ASTroot root() :
 {
 }
 {
-    (complex_type())* <EOF> { return jjtThis; }
+    (complex_type())* #ComplexTypes <EOF> { return jjtThis; }
 }
 
-void complex_type() :
+void complex_type() #void :
 {}
 {
     message()
@@ -55,25 +67,65 @@ void complex_type() :
 
 void message():
 {
+    String message_ident;
+    String parent_ident = null;
 }
 {
-    <MESSAGE> <ID> (":" <ID>)? "{" (field())* "}"
+    <MESSAGE> message_ident=identifier() (":" parent_ident=identifier())? "{" (field())* #fields "}"
+    {
+        jjtThis.setIdent(message_ident); jjtThis.setParent(parent_ident);
+    }
 }
 
 void field():
-{}
 {
-    type_identifier() <ID> "=" <DIGITS> ";"
+    String type_ident;
+    String field_ident;
+    int field_number;
+}
+{
+    type_ident=type_identifier() field_ident=identifier() "=" field_number=field_number() ";"
+    {
+        jjtThis.setTypeIdent(type_ident); jjtThis.setFieldIdent(field_ident); jjtThis.setFieldNumber(field_number);
+    }
 }
 
-void type_identifier():
-{}
+String type_identifier() #void :
 {
-    primitive_type() // | <ID> | <LIST> "<" type_identifier() ">"
+    String i;
+}
+{
+    i=primitive_type() { return i; } // | <ID> | <LIST> "<" type_identifier() ">"
 }
 
-void primitive_type():
-{}
+String primitive_type() #void :
 {
-    <BOOL> | <INT> | <FLOAT> | <DOUBLE> | <STRING>
+    Token t;
+}
+{
+    t=<BOOL>        { return t.image; }
+    |
+    t=<INT>         { return t.image; }
+    |
+    t=<FLOAT>       { return t.image; }
+    |
+    t=<DOUBLE>      { return t.image; }
+    |
+    t=<STRING>      { return t.image; }
+}
+
+String identifier() #void :
+{
+    Token t;
+}
+{
+    (t=<ID>) { return t.image; }
+}
+
+int field_number() #void :
+{
+    Token t;
+}
+{
+    t=<DIGITS> { return Integer.parseInt(t.image); }
 }

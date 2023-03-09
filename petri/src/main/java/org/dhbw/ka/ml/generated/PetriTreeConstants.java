@@ -4,20 +4,20 @@ package org.dhbw.ka.ml.generated;
 public interface PetriTreeConstants
 {
   public int JJTROOT = 0;
-  public int JJTCOMPLEX_TYPE = 1;
-  public int JJTMESSAGE = 2;
-  public int JJTFIELD = 3;
-  public int JJTTYPE_IDENTIFIER = 4;
-  public int JJTPRIMITIVE_TYPE = 5;
+  public int JJTCOMPLEXTYPES = 1;
+  public int JJTVOID = 2;
+  public int JJTMESSAGE = 3;
+  public int JJTFIELDS = 4;
+  public int JJTFIELD = 5;
 
 
   public String[] jjtNodeName = {
     "root",
-    "complex_type",
+    "ComplexTypes",
+    "void",
     "message",
+    "fields",
     "field",
-    "type_identifier",
-    "primitive_type",
   };
 }
-/* JavaCC - OriginalChecksum=b7c65f3d913a3f7171b4c2bbad057d9c (do not edit this line) */
+/* JavaCC - OriginalChecksum=88ddb624b802fcee89fcdfa21063da11 (do not edit this line) */
