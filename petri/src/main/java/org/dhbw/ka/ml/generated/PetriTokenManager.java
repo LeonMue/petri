@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
+import org.dhbw.ka.ml.visitor.scopeduplications.ScopeDuplicationVisitor;
 
 /** Token Manager. */
 public class PetriTokenManager implements PetriConstants

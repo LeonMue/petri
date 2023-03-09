@@ -12,10 +12,10 @@ import java.nio.file.Paths;
 
 public class SyntaxTest {
 
-    private Path basePath = Paths.get("src", "test", "resources");
+    private Path basePath = Paths.get("src", "test", "resources", "syntax");
 
     @ParameterizedTest
-    @ValueSource(strings = { "empty_message.petri", "more_complex.petri", "nothing.petri" })
+    @ValueSource(strings = { "empty_message.petri", "duplicated_field_number.petri", "nothing.petri" })
     void validFiles_should_notThrowParseException(String filename) throws FileNotFoundException {
         var filePath = Paths.get(this.basePath.toString(), "valid", filename);
         var parser = new Petri(new FileReader(filePath.toFile()));

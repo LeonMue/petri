@@ -4,13 +4,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
+
+import org.dhbw.ka.ml.visitor.scopeduplications.ScopeDuplicationVisitor;
 public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants {/*@bgen(jjtree)*/
   protected JJTPetriState jjtree = new JJTPetriState();public static void main(String[] args) throws ParseException, IOException {
-        var path = Paths.get("src", "test", "resources", "valid", "more_complex.petri");
+        var path = Paths.get("src", "test", "resources", "syntax", "valid", "more_complex.petri");
         var parser = new Petri(new BufferedReader(new FileReader(path.toFile())));
         try {
             var node = parser.root();
-            node.dump("");
+            // node.dump("");
+            node.jjtAccept(new ScopeDuplicationVisitor(), null);
         } catch (Exception e) {
             e.printStackTrace();
         }

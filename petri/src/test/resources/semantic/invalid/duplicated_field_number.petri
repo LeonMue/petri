@@ -1,0 +1,7 @@
+# This should throw an FieldNumberAlreadyExistsException because of duplicated field numbers
+message T {
+
+    string s = 0;
+    int i = 00;
+
+}

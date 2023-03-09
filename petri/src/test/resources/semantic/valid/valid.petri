@@ -1,0 +1,10 @@
+message T {
+}
+
+message T1 : T2 {
+    string s = 0;
+    int i = 01;
+    float f = 0002;
+}
+
+message M { }
