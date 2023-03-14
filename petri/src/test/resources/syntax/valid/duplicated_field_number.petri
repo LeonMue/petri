@@ -1,0 +1,6 @@
+message T {
+
+    string s = 0;
+    int i = 00;
+
+}

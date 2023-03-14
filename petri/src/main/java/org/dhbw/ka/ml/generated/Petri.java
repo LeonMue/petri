@@ -19,8 +19,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
             node.jjtAccept(new FieldNumberModifierVisitor(), null);
             node.jjtAccept(new JavaGenVisitor(
                     Paths.get("src", "main", "java"),
-                    "org.dhbw.ka.ml.generated",
-                    Paths.get("org", "dhbw", "ka", "ml", "generated")
+                    "org.dhbw.ka.ml.generated"
             ), null);
         } catch (Exception e) {
             e.printStackTrace();

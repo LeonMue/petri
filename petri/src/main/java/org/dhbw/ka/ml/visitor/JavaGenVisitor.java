@@ -15,9 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JavaGenVisitor implements PetriVisitor {
 
-    private final Path outDir;
+    private final Path generationPath;
     private final String packageName;
-    private final Path packagePath;
 
     @Override
     public Object visit(SimpleNode node, Object data) {
@@ -40,8 +39,7 @@ public class JavaGenVisitor implements PetriVisitor {
         node.childrenAccept(this, fields);
 
         final var filePath = Paths.get(
-                this.outDir.toString(),
-                this.packagePath.toString(),
+                this.generationPath.toString(),
                 node.getIdent() + ".java"
         );
         try (final var out = new BufferedWriter(new FileWriter(filePath.toFile()))) {
