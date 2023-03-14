@@ -6,24 +6,8 @@ options {
 
 PARSER_BEGIN(Petri)
 package org.dhbw.ka.ml.generated;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Paths;
 
-import org.dhbw.ka.ml.visitor.scopeduplications.ScopeDuplicationVisitor;
 public class Petri {
-    public static void main(String[] args) throws ParseException, IOException {
-        var path = Paths.get("src", "test", "resources", "syntax", "valid", "more_complex.petri");
-        var parser = new Petri(new BufferedReader(new FileReader(path.toFile())));
-        try {
-            var node = parser.root();
-            // node.dump("");
-            node.jjtAccept(new ScopeDuplicationVisitor(), null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
 PARSER_END(Petri)
 
