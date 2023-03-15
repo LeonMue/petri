@@ -9,24 +9,20 @@ import java.io.Writer;
 @Data
 public class DoubleField implements PetriSerializable {
 
-    private final ASTfield field;
-    private final Writer out;
-
     @Override
-    public void serializeDataOutput(String dataOutput) throws IOException {
-        this.out.write(String.format(
-                "%s.writeDouble(this.%s);",
-                dataOutput,
-                this.field.getFieldIdent()
-        ));
+    public String serializeDataOutput(String value, String dataOutput) {
+        return String.format(
+                "org.dhbw.ka.ml.petrilib.serializing.primitives.PetriDouble.serialize(%s, %s)",
+                value,
+                dataOutput
+        );
     }
 
     @Override
-    public void deserializeDataInput(String dataInput) throws IOException {
-        this.out.write(String.format(
-                "this.%s = %s.readDouble(%s);",
-                this.field.getFieldIdent(),
+    public String deserializeDataInput(String dataInput) {
+        return String.format(
+                "org.dhbw.ka.ml.petrilib.serializing.primitives.PetriDouble.deserialize(%s)",
                 dataInput
-        ));
+        );
     }
 }

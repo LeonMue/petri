@@ -8,25 +8,20 @@ import java.io.Writer;
 
 @Data
 public class LongField implements PetriSerializable {
-
-    private final ASTfield field;
-    private final Writer out;
-
     @Override
-    public void serializeDataOutput(String dataOutput) throws IOException {
-        this.out.write(String.format(
-                "Varint.writeSignedVarLong(this.%s, %s);",
-                this.field.getFieldIdent(),
+    public String serializeDataOutput(String value, String dataOutput) {
+        return String.format(
+                "org.dhbw.ka.ml.petrilib.serializing.primitives.PetriLong.serialize(%s, %s)",
+                value,
                 dataOutput
-        ));
+        );
     }
 
     @Override
-    public void deserializeDataInput(String dataInput) throws IOException {
-        this.out.write(String.format(
-                "this.%s = Varint.readSignedVarLong(%s);",
-                this.field.getFieldIdent(),
+    public String deserializeDataInput(String dataInput) {
+        return String.format(
+                "org.dhbw.ka.ml.petrilib.serializing.primitives.PetriLong.deserialize(%s)",
                 dataInput
-        ));
+        );
     }
 }
