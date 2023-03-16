@@ -86,9 +86,7 @@ public class Main {
             final var outputPath = cmd.getOptionValue(javaOutOption);
             final var javaPackage = cmd.getOptionValue(javaPackageOption);
 
-            final var packagePath = javaPackage.replace('.', File.separatorChar);
-            final var generationPath = Paths.get(outputPath, packagePath);
-
+            final var generationPath = Paths.get(outputPath);
             generationPath.toFile().mkdirs();
 
 
