@@ -1,4 +1,4 @@
-package org.dhbw.ka.ml.visitor.scopeduplications;
+package org.dhbw.ka.ml.semantic.scopeduplications;
 
 public class FieldNumberAlreadyExistsException extends RuntimeException {
 

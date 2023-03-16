@@ -1,9 +1,7 @@
-package org.dhbw.ka.ml.visitor.scopeduplications;
+package org.dhbw.ka.ml.semantic.scopeduplications;
 
 import lombok.Data;
 import org.dhbw.ka.ml.generated.*;
-import org.dhbw.ka.ml.visitor.scopeduplications.FieldNumberAlreadyExistsException;
-import org.dhbw.ka.ml.visitor.scopeduplications.IdentifierAlreadyDeclaredException;
 
 import java.util.HashSet;
 import java.util.Set;

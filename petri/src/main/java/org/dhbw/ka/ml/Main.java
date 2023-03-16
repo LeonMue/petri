@@ -2,14 +2,12 @@ package org.dhbw.ka.ml;
 
 import org.apache.commons.cli.*;
 import org.dhbw.ka.ml.generated.Petri;
-import org.dhbw.ka.ml.visitor.JavaGenVisitor;
-import org.dhbw.ka.ml.visitor.fieldnumber.FieldNumberModifierVisitor;
-import org.dhbw.ka.ml.visitor.scopeduplications.ScopeDuplicationVisitor;
+import org.dhbw.ka.ml.semantic.JavaGenVisitor;
+import org.dhbw.ka.ml.semantic.fieldnumber.FieldNumberModifierVisitor;
+import org.dhbw.ka.ml.semantic.scopeduplications.ScopeDuplicationVisitor;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 

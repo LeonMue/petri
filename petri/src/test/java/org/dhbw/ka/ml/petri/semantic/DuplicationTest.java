@@ -1,13 +1,11 @@
 package org.dhbw.ka.ml.petri.semantic;
 
-import org.dhbw.ka.ml.visitor.scopeduplications.FieldNumberAlreadyExistsException;
-import org.dhbw.ka.ml.visitor.scopeduplications.ScopeDuplicationVisitor;
-import org.dhbw.ka.ml.visitor.scopeduplications.IdentifierAlreadyDeclaredException;
+import org.dhbw.ka.ml.semantic.scopeduplications.FieldNumberAlreadyExistsException;
+import org.dhbw.ka.ml.semantic.scopeduplications.ScopeDuplicationVisitor;
+import org.dhbw.ka.ml.semantic.scopeduplications.IdentifierAlreadyDeclaredException;
 import org.dhbw.ka.ml.generated.ParseException;
 import org.dhbw.ka.ml.generated.Petri;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

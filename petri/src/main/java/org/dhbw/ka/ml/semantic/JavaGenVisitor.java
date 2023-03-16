@@ -1,4 +1,4 @@
-package org.dhbw.ka.ml.visitor;
+package org.dhbw.ka.ml.semantic;
 
 import lombok.RequiredArgsConstructor;
 import org.dhbw.ka.ml.codegen.java.LinePrinter;

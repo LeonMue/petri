@@ -1,4 +1,4 @@
-package org.dhbw.ka.ml.visitor.fieldnumber;
+package org.dhbw.ka.ml.semantic.fieldnumber;
 
 import org.dhbw.ka.ml.generated.*;
 
