@@ -8,23 +8,21 @@ import java.io.*;
 @Data
 public class IntField implements PetriSerializable {
 
-    private final ASTfield field;
-    private final Writer out;
-
-    public void serializeDataOutput(String dataOutput) throws IOException {
-        this.out.write(String.format(
-                "Varint.writeSignedVarInt(this.%s, %s);",
-                this.field.getFieldIdent(),
+    @Override
+    public String serializeDataOutput(String value, String dataOutput) {
+        return String.format(
+                "org.dhbw.ka.ml.petrilib.serializing.primitives.PetriInt.serialize(%s, %s)",
+                value,
                 dataOutput
-        ));
+        );
     }
 
-    public void deserializeDataInput(String dataInput) throws IOException {
-        this.out.write(String.format(
-                "this.%s = Varint.readSignedVarInt(%s);",
-                this.field.getFieldIdent(),
+    @Override
+    public String deserializeDataInput(String dataInput) {
+        return String.format(
+                "org.dhbw.ka.ml.petrilib.serializing.primitives.PetriInt.deserialize(%s)",
                 dataInput
-        ));
+        );
     }
 
 }

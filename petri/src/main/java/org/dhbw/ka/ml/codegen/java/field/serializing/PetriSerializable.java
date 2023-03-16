@@ -1,12 +1,11 @@
 package org.dhbw.ka.ml.codegen.java.field.serializing;
 
 import java.io.IOException;
-import java.lang.reflect.InaccessibleObjectException;
 
 public interface PetriSerializable {
 
-    void serializeDataOutput(String dataOutput) throws IOException;
+    String serializeDataOutput(String value, String dataOutput);
 
-    void deserializeDataInput(String dataInput) throws IOException;
+    String deserializeDataInput(String dataInput);
 
 }

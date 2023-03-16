@@ -1,7 +1,10 @@
 package org.dhbw.ka.ml.visitor;
 
 import lombok.RequiredArgsConstructor;
+import org.dhbw.ka.ml.codegen.java.LinePrinter;
 import org.dhbw.ka.ml.codegen.java.Message;
+import org.dhbw.ka.ml.codegen.java.PetriTypeToJavaTypeMapper;
+import org.dhbw.ka.ml.codegen.java.field.serializing.PetriTypeToPetriSerializableMapper;
 import org.dhbw.ka.ml.generated.*;
 
 import java.io.BufferedWriter;
@@ -43,7 +46,14 @@ public class JavaGenVisitor implements PetriVisitor {
                 node.getIdent() + ".java"
         );
         try (final var out = new BufferedWriter(new FileWriter(filePath.toFile()))) {
-            final var message = new Message(this.packageName, node.getIdent(), out, fields);
+            final var message = new Message(
+                    this.packageName,
+                    node.getIdent(),
+                    new LinePrinter(out),
+                    fields,
+                    new PetriTypeToPetriSerializableMapper(),
+                    new PetriTypeToJavaTypeMapper()
+            );
             message.generate();
         } catch (IOException e) {
             throw new RuntimeException(e);
