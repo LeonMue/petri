@@ -9,10 +9,10 @@ public class PetriTypeToPetriSerializableMapper implements Function<String, Petr
 
     private static Map<String, PetriSerializable> mapping = Map.ofEntries(
             entry("bool", new BoolField()),
-            entry("int", new IntField()),
-            entry("long", new LongField()),
-            entry("float", new FloatField()),
-            entry("double", new DoubleField()),
+            entry("int32", new IntField()),
+            entry("int64", new LongField()),
+            entry("float32", new FloatField()),
+            entry("float64", new DoubleField()),
             entry("string", new StringField())
     );
 

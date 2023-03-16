@@ -1,4 +1,0 @@
-message T {
-    string s = 0;
-    int s = 0;
-}

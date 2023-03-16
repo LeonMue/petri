@@ -13,19 +13,19 @@ public interface PetriConstants {
   /** RegularExpression Id. */
   int ONE_LINE_COMMENT = 5;
   /** RegularExpression Id. */
-  int MESSAGE = 6;
+  int STRUCT = 6;
   /** RegularExpression Id. */
   int BOOL = 7;
   /** RegularExpression Id. */
-  int INT = 8;
+  int INT32 = 8;
   /** RegularExpression Id. */
-  int FLOAT = 9;
+  int INT64 = 9;
   /** RegularExpression Id. */
-  int DOUBLE = 10;
+  int FLOAT32 = 10;
   /** RegularExpression Id. */
-  int STRING = 11;
+  int FLOAT64 = 11;
   /** RegularExpression Id. */
-  int LIST = 12;
+  int STRING = 12;
   /** RegularExpression Id. */
   int DIGIT = 13;
   /** RegularExpression Id. */
@@ -48,13 +48,13 @@ public interface PetriConstants {
     "\"\\t\"",
     "\"\\n\"",
     "<ONE_LINE_COMMENT>",
-    "\"message\"",
+    "\"struct\"",
     "\"bool\"",
-    "\"int\"",
-    "\"float\"",
-    "\"double\"",
+    "\"int32\"",
+    "\"int64\"",
+    "\"float32\"",
+    "\"float64\"",
     "\"string\"",
-    "\"List\"",
     "<DIGIT>",
     "<DIGITS>",
     "<LETTER>",
@@ -63,7 +63,6 @@ public interface PetriConstants {
     "\":\"",
     "\"{\"",
     "\"}\"",
-    "\"=\"",
     "\";\"",
   };
 

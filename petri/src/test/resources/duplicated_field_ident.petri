@@ -1,0 +1,5 @@
+struct T {
+    string s;
+    int32 i;
+    string i;
+}

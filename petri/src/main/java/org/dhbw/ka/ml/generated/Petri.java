@@ -17,7 +17,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
         label_1:
         while (true) {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case MESSAGE:
+          case STRUCT:
             ;
             break;
           default:
@@ -72,39 +72,62 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
   }
 
   final public void complex_type() throws ParseException {
-    message();
+    struct();
   }
 
-  final public void message() throws ParseException {
- /*@bgen(jjtree) message */
-    ASTmessage jjtn000 = new ASTmessage(JJTMESSAGE);
-    boolean jjtc000 = true;
-    jjtree.openNodeScope(jjtn000);String message_ident;
-    String parent_ident = null;
+  final public void struct() throws ParseException {
+ /*@bgen(jjtree) struct */
+  ASTstruct jjtn000 = new ASTstruct(JJTSTRUCT);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
     try {
-      jj_consume_token(MESSAGE);
-      message_ident = identifier();
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 18:
-        jj_consume_token(18);
-        parent_ident = identifier();
-        break;
-      default:
-        jj_la1[1] = jj_gen;
-        ;
+      jj_consume_token(STRUCT);
+      identifier();
+                             ASTParentIdentifier jjtn001 = new ASTParentIdentifier(JJTPARENTIDENTIFIER);
+                             boolean jjtc001 = true;
+                             jjtree.openNodeScope(jjtn001);
+      try {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case 18:
+          jj_consume_token(18);
+          identifier();
+          break;
+        default:
+          jj_la1[1] = jj_gen;
+          ;
+        }
+      } catch (Throwable jjte001) {
+                             if (jjtc001) {
+                               jjtree.clearNodeScope(jjtn001);
+                               jjtc001 = false;
+                             } else {
+                               jjtree.popNode();
+                             }
+                             if (jjte001 instanceof RuntimeException) {
+                               {if (true) throw (RuntimeException)jjte001;}
+                             }
+                             if (jjte001 instanceof ParseException) {
+                               {if (true) throw (ParseException)jjte001;}
+                             }
+                             {if (true) throw (Error)jjte001;}
+      } finally {
+                             if (jjtc001) {
+                               jjtree.closeNodeScope(jjtn001, true);
+                             }
       }
       jj_consume_token(19);
-                                                                                ASTfields jjtn001 = new ASTfields(JJTFIELDS);
-                                                                                boolean jjtc001 = true;
-                                                                                jjtree.openNodeScope(jjtn001);
+                                                                        ASTfields jjtn002 = new ASTfields(JJTFIELDS);
+                                                                        boolean jjtc002 = true;
+                                                                        jjtree.openNodeScope(jjtn002);
       try {
         label_2:
         while (true) {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case BOOL:
-          case INT:
-          case FLOAT:
-          case DOUBLE:
+          case INT32:
+          case INT64:
+          case FLOAT32:
+          case FLOAT64:
           case STRING:
             ;
             break;
@@ -114,29 +137,26 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
           }
           field();
         }
-      } catch (Throwable jjte001) {
-                                                                                if (jjtc001) {
-                                                                                  jjtree.clearNodeScope(jjtn001);
-                                                                                  jjtc001 = false;
-                                                                                } else {
-                                                                                  jjtree.popNode();
-                                                                                }
-                                                                                if (jjte001 instanceof RuntimeException) {
-                                                                                  {if (true) throw (RuntimeException)jjte001;}
-                                                                                }
-                                                                                if (jjte001 instanceof ParseException) {
-                                                                                  {if (true) throw (ParseException)jjte001;}
-                                                                                }
-                                                                                {if (true) throw (Error)jjte001;}
+      } catch (Throwable jjte002) {
+                                                                        if (jjtc002) {
+                                                                          jjtree.clearNodeScope(jjtn002);
+                                                                          jjtc002 = false;
+                                                                        } else {
+                                                                          jjtree.popNode();
+                                                                        }
+                                                                        if (jjte002 instanceof RuntimeException) {
+                                                                          {if (true) throw (RuntimeException)jjte002;}
+                                                                        }
+                                                                        if (jjte002 instanceof ParseException) {
+                                                                          {if (true) throw (ParseException)jjte002;}
+                                                                        }
+                                                                        {if (true) throw (Error)jjte002;}
       } finally {
-                                                                                if (jjtc001) {
-                                                                                  jjtree.closeNodeScope(jjtn001, true);
-                                                                                }
+                                                                        if (jjtc002) {
+                                                                          jjtree.closeNodeScope(jjtn002, true);
+                                                                        }
       }
       jj_consume_token(20);
-      jjtree.closeNodeScope(jjtn000, true);
-      jjtc000 = false;
-        jjtn000.setIdent(message_ident); jjtn000.setParent(parent_ident);
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -160,20 +180,13 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
 
   final public void field() throws ParseException {
  /*@bgen(jjtree) field */
-    ASTfield jjtn000 = new ASTfield(JJTFIELD);
-    boolean jjtc000 = true;
-    jjtree.openNodeScope(jjtn000);String type_ident;
-    String field_ident;
-    int field_number;
+  ASTfield jjtn000 = new ASTfield(JJTFIELD);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
     try {
-      type_ident = type_identifier();
-      field_ident = identifier();
+      type_identifier();
+      identifier();
       jj_consume_token(21);
-      field_number = field_number();
-      jj_consume_token(22);
-      jjtree.closeNodeScope(jjtn000, true);
-      jjtc000 = false;
-        jjtn000.setTypeIdent(type_ident); jjtn000.setFieldIdent(field_ident); jjtn000.setFieldNumber(field_number);
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -195,56 +208,65 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
     }
   }
 
-  final public String type_identifier() throws ParseException {
-    String i;
-    i = primitive_type();
-                         {if (true) return i;}
-    throw new Error("Missing return statement in function");
+  final public void type_identifier() throws ParseException {
+    primitive_type();
   }
 
-  final public String primitive_type() throws ParseException {
-    Token t;
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case BOOL:
-      t = jj_consume_token(BOOL);
-                      {if (true) return t.image;}
-      break;
-    case INT:
-      t = jj_consume_token(INT);
-                      {if (true) return t.image;}
-      break;
-    case FLOAT:
-      t = jj_consume_token(FLOAT);
-                      {if (true) return t.image;}
-      break;
-    case DOUBLE:
-      t = jj_consume_token(DOUBLE);
-                      {if (true) return t.image;}
-      break;
-    case STRING:
-      t = jj_consume_token(STRING);
-                      {if (true) return t.image;}
-      break;
-    default:
-      jj_la1[3] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+  final public void primitive_type() throws ParseException {
+ /*@bgen(jjtree) PrimitiveType */
+    ASTPrimitiveType jjtn000 = new ASTPrimitiveType(JJTPRIMITIVETYPE);
+    boolean jjtc000 = true;
+    jjtree.openNodeScope(jjtn000);Token t;
+    try {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case BOOL:
+        t = jj_consume_token(BOOL);
+        break;
+      case INT32:
+        t = jj_consume_token(INT32);
+        break;
+      case INT64:
+        t = jj_consume_token(INT64);
+        break;
+      case FLOAT32:
+        t = jj_consume_token(FLOAT32);
+        break;
+      case FLOAT64:
+        t = jj_consume_token(FLOAT64);
+        break;
+      case STRING:
+        t = jj_consume_token(STRING);
+        break;
+      default:
+        jj_la1[3] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+                  jjtree.closeNodeScope(jjtn000, true);
+                  jjtc000 = false;
+                  jjtn000.setType(t.image); jjtn000.setBeginColumn(t.beginColumn); jjtn000.setBeginLine(t.beginLine);
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
     }
-    throw new Error("Missing return statement in function");
   }
 
-  final public String identifier() throws ParseException {
-    Token t;
-    t = jj_consume_token(ID);
-               {if (true) return t.image;}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public int field_number() throws ParseException {
-    Token t;
-    t = jj_consume_token(DIGITS);
-                 {if (true) return Integer.parseInt(t.image);}
-    throw new Error("Missing return statement in function");
+  final public void identifier() throws ParseException {
+ /*@bgen(jjtree) Identifier */
+    ASTIdentifier jjtn000 = new ASTIdentifier(JJTIDENTIFIER);
+    boolean jjtc000 = true;
+    jjtree.openNodeScope(jjtn000);Token t;
+    try {
+      t = jj_consume_token(ID);
+               jjtree.closeNodeScope(jjtn000, true);
+               jjtc000 = false;
+               jjtn000.setIdent(t.image); jjtn000.setBeginColumn(t.beginColumn); jjtn000.setBeginLine(t.beginLine);
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
   }
 
   /** Generated Token Manager. */
@@ -262,7 +284,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x40,0x40000,0xf80,0xf80,};
+      jj_la1_0 = new int[] {0x40,0x40000,0x1f80,0x1f80,};
    }
 
   /** Constructor with InputStream. */
@@ -382,7 +404,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[23];
+    boolean[] la1tokens = new boolean[22];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -396,7 +418,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
         }
       }
     }
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 22; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

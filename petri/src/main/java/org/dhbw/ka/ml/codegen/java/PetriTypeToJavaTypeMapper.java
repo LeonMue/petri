@@ -9,10 +9,10 @@ public class PetriTypeToJavaTypeMapper implements Function<String, String> {
 
     private static Map<String, String> typeMapping = Map.ofEntries(
             entry("bool", "boolean"),
-            entry("int", "int"),
-            entry("long", "long"),
-            entry("float", "float"),
-            entry("double", "double"),
+            entry("int32", "int"),
+            entry("int64", "long"),
+            entry("float32", "float"),
+            entry("float64", "double"),
             entry("string", "String")
     );
 

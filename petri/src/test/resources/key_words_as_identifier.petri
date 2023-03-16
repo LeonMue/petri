@@ -1,0 +1,5 @@
+# it is invalid to use a key word as identifier
+struct struct {
+    string string;
+    int int;
+}

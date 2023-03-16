@@ -1,0 +1,15 @@
+struct Type {
+    bool bool1;
+    int32 i;
+    int64 l;
+    float32 _1;
+    float64 dl;
+    string name;
+    string o;
+}
+
+# this is the second message
+struct Type2:Type {
+    string __11;
+    int32 l_ol__1234;
+}

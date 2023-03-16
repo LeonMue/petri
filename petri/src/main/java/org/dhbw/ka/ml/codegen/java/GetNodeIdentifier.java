@@ -2,7 +2,10 @@ package org.dhbw.ka.ml.codegen.java;
 
 import org.dhbw.ka.ml.generated.*;
 
-public class JavaCodeGenVisitor implements PetriVisitor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class GetNodeIdentifier implements PetriVisitor {
     @Override
     public Object visit(SimpleNode node, Object data) {
         return null;
@@ -19,7 +22,12 @@ public class JavaCodeGenVisitor implements PetriVisitor {
     }
 
     @Override
-    public Object visit(ASTmessage node, Object data) {
+    public Object visit(ASTstruct node, Object data) {
+        return null;
+    }
+
+    @Override
+    public Object visit(ASTParentIdentifier node, Object data) {
         return null;
     }
 
@@ -30,6 +38,18 @@ public class JavaCodeGenVisitor implements PetriVisitor {
 
     @Override
     public Object visit(ASTfield node, Object data) {
+        return null;
+    }
+
+    @Override
+    public Object visit(ASTPrimitiveType node, Object data) {
+        return null;
+    }
+
+    @Override
+    public Object visit(ASTIdentifier node, Object data) {
+        final var nodeIdentContainer = (List<String>) data;
+        nodeIdentContainer.add(node.getIdent());
         return null;
     }
 }
