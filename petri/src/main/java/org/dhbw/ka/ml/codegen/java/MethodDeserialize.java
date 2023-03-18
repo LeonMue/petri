@@ -58,7 +58,15 @@ public class MethodDeserialize implements PetriVisitor {
         this.out.write("while (messageStream.available() > 0) {");
         this.out.write("fieldNumber = org.dhbw.ka.ml.petrilib.serializing.VarInt.deserializeUnsigned(in);");
         this.out.write("switch (fieldNumber) {");
+
+        // cover all cases of field numbers
         node.childrenAccept(this, null);
+
+        // If no cases got matched => unknown field => stop deserializing for this message
+        this.out.write("default: {");
+        this.out.write("return value;");
+        this.out.write("}");  // default
+
         this.out.write("}");  // switch
         this.out.write("}");  // while
         this.out.write("}");  // try
