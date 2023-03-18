@@ -1,10 +1,6 @@
 package org.dhbw.ka.ml.codegen.java.field.serializing;
 
 import lombok.Data;
-import org.dhbw.ka.ml.generated.ASTfield;
-
-import java.io.IOException;
-import java.io.Writer;
 
 @Data
 public class DoubleField implements PetriSerializable {
@@ -22,6 +18,14 @@ public class DoubleField implements PetriSerializable {
     public String deserializeDataInput(String dataInput) {
         return String.format(
                 "org.dhbw.ka.ml.petrilib.serializing.primitives.PetriDouble.deserialize(%s)",
+                dataInput
+        );
+    }
+
+    @Override
+    public String skip(String dataInput) {
+        return String.format(
+                "org.dhbw.ka.ml.petrilib.serializing.primitives.PetriDouble.skip(%s)",
                 dataInput
         );
     }

@@ -21,4 +21,12 @@ public class BoolField implements PetriSerializable {
                 dataInput
         );
     }
+
+    @Override
+    public String skip(String dataInput) {
+        return String.format(
+                "org.dhbw.ka.ml.petrilib.serializing.primitives.PetriBool.skip(%s)",
+                dataInput
+        );
+    }
 }
