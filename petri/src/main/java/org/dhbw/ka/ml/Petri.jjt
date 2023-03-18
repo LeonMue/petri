@@ -23,13 +23,13 @@ SPECIAL_TOKEN : {
 }
 
 TOKEN : {
-    < MESSAGE: "message" >
+    < STRUCT: "struct" >
 |   < BOOL: "bool" >
-|   < INT: "int" >
-|   < FLOAT: "float" >
-|   < DOUBLE: "double" >
+|   < INT32: "int32" >
+|   < INT64: "int64" >
+|   < FLOAT32: "float32" >
+|   < FLOAT64: "float64" >
 |   < STRING: "string" >
-|   < LIST: "List" >
 }
 
 TOKEN : {
@@ -50,70 +50,52 @@ ASTroot root() :
 void complex_type() #void :
 {}
 {
-    message()
+    struct()
 }
 
-void message():
+void struct():
 {
-    String message_ident;
-    String parent_ident = null;
 }
 {
-    <MESSAGE> message_ident=identifier() (":" parent_ident=identifier())? "{" (field())* #fields "}"
-    {
-        jjtThis.setIdent(message_ident); jjtThis.setParent(parent_ident);
-    }
+    <STRUCT> identifier() ((":" identifier())? #ParentIdentifier) "{" (field())* #fields "}"
 }
 
 void field():
 {
-    String type_ident;
-    String field_ident;
-    int field_number;
 }
 {
-    type_ident=type_identifier() field_ident=identifier() "=" field_number=field_number() ";"
-    {
-        jjtThis.setTypeIdent(type_ident); jjtThis.setFieldIdent(field_ident); jjtThis.setFieldNumber(field_number);
-    }
+    type_identifier() identifier() ";"
 }
 
-String type_identifier() #void :
+void type_identifier() #void :
 {
-    String i;
 }
 {
-    i=primitive_type() { return i; } // | <ID> | <LIST> "<" type_identifier() ">"
+    primitive_type() // | <ID> | <LIST> "<" type_identifier() ">"
 }
 
-String primitive_type() #void :
+void primitive_type() #PrimitiveType :
 {
     Token t;
 }
 {
-    t=<BOOL>        { return t.image; }
+    (t=<BOOL>
     |
-    t=<INT>         { return t.image; }
+    t=<INT32>
     |
-    t=<FLOAT>       { return t.image; }
+    t=<INT64>
     |
-    t=<DOUBLE>      { return t.image; }
+    t=<FLOAT32>
     |
-    t=<STRING>      { return t.image; }
+    t=<FLOAT64>
+    |
+    t=<STRING>) { jjtThis.setType(t.image); jjtThis.setBeginColumn(t.beginColumn); jjtThis.setBeginLine(t.beginLine); }
 }
 
-String identifier() #void :
+void identifier() #Identifier :
 {
     Token t;
 }
 {
-    (t=<ID>) { return t.image; }
-}
-
-int field_number() #void :
-{
-    Token t;
-}
-{
-    t=<DIGITS> { return Integer.parseInt(t.image); }
+    (t=<ID>) { jjtThis.setIdent(t.image); jjtThis.setBeginColumn(t.beginColumn); jjtThis.setBeginLine(t.beginLine); }
 }

@@ -6,18 +6,24 @@ public interface PetriTreeConstants
   public int JJTROOT = 0;
   public int JJTCOMPLEXTYPES = 1;
   public int JJTVOID = 2;
-  public int JJTMESSAGE = 3;
-  public int JJTFIELDS = 4;
-  public int JJTFIELD = 5;
+  public int JJTSTRUCT = 3;
+  public int JJTPARENTIDENTIFIER = 4;
+  public int JJTFIELDS = 5;
+  public int JJTFIELD = 6;
+  public int JJTPRIMITIVETYPE = 7;
+  public int JJTIDENTIFIER = 8;
 
 
   public String[] jjtNodeName = {
     "root",
     "ComplexTypes",
     "void",
-    "message",
+    "struct",
+    "ParentIdentifier",
     "fields",
     "field",
+    "PrimitiveType",
+    "Identifier",
   };
 }
-/* JavaCC - OriginalChecksum=88ddb624b802fcee89fcdfa21063da11 (do not edit this line) */
+/* JavaCC - OriginalChecksum=be00f54c48732713919f57ab9a27f6e2 (do not edit this line) */

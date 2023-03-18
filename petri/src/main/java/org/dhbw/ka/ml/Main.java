@@ -1,10 +1,10 @@
 package org.dhbw.ka.ml;
 
 import org.apache.commons.cli.*;
+import org.dhbw.ka.ml.astmodification.AssignFieldNumbers;
+import org.dhbw.ka.ml.codegen.java.JavaCodeGenerator;
 import org.dhbw.ka.ml.generated.Petri;
-import org.dhbw.ka.ml.semantic.JavaGenVisitor;
-import org.dhbw.ka.ml.semantic.fieldnumber.FieldNumberModifierVisitor;
-import org.dhbw.ka.ml.semantic.scopeduplications.ScopeDuplicationVisitor;
+import org.dhbw.ka.ml.semantic.scopeduplications.ScopedIdentDuplications;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -65,10 +65,10 @@ public class Main {
         final var rootNode = petriParser.root();
 
         // semantic checking
-        rootNode.jjtAccept(new ScopeDuplicationVisitor(), null);
+        rootNode.jjtAccept(new ScopedIdentDuplications(), null);
 
         // modify field numbers
-        rootNode.jjtAccept(new FieldNumberModifierVisitor(), null);
+        rootNode.jjtAccept(new AssignFieldNumbers(), null);
 
         // generate for java?
         final var javaOutputHasSet = cmd.hasOption(javaOutOption);
@@ -87,14 +87,18 @@ public class Main {
             final var generationPath = Paths.get(outputPath);
             generationPath.toFile().mkdirs();
 
+            rootNode.jjtAccept(new JavaCodeGenerator(
+                    generationPath,
+                    javaPackage
+            ), null);
 
-            rootNode.jjtAccept(
+            /*rootNode.jjtAccept(
                     new JavaGenVisitor(
                             generationPath,
                             javaPackage
                     ),
                     null
-            );
+            );*/
         }
     }
 
