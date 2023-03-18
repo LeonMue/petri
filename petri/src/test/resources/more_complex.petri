@@ -3,6 +3,7 @@ struct Type {
     int32 i;
     int64 l;
     float32 _1;
+    @deleted
     float64 dl;
     string name;
     string o;

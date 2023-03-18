@@ -15,6 +15,8 @@ public class MethodDeserialize implements PetriVisitor {
     private String typeIdent;
     private final PetriTypeToPetriSerializableMapper petriTypeToPetriSerializableMapper = new PetriTypeToPetriSerializableMapper();
 
+    private final PetriTypeToJavaTypeMapper petriTypeToJavaTypeMapper = new PetriTypeToJavaTypeMapper();
+
     @Override
     public Object visit(SimpleNode node, Object data) {
         return null;
@@ -87,10 +89,18 @@ public class MethodDeserialize implements PetriVisitor {
                 node.getFieldNumber()
         ));
         this.out.write(String.format(
-                "value.set%s(%s);",
-                JavaNameConventions.firstLetterUpperCase(this.fieldIdent),
+                "%s fieldValue = %s;",
+                this.petriTypeToJavaTypeMapper.apply(this.typeIdent),
                 this.petriTypeToPetriSerializableMapper.apply(this.typeIdent).deserializeDataInput("in")
         ));
+
+        if (!node.isDeleted()) {
+            // in other words: if value is deleted => skip field because it doesn't exist here anymore
+            this.out.write(String.format(
+                    "value.set%s(fieldValue);",
+                    JavaNameConventions.firstLetterUpperCase(this.fieldIdent)
+            ));
+        }
         this.out.write("break;");
         this.out.write("}");  // case
         return null;

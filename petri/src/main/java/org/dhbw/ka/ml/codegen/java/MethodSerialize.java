@@ -63,6 +63,10 @@ public class MethodSerialize implements PetriVisitor {
 
     @Override
     public Object visit(ASTfield node, Object data) {
+        if (node.isDeleted()) {
+            return null;
+        }
+
         node.childrenAccept(this, null);
         try {
             this.out.write(String.format(

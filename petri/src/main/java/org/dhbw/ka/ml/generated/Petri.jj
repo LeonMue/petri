@@ -34,6 +34,7 @@ TOKEN : {
 |   < FLOAT32: "float32" >
 |   < FLOAT64: "float64" >
 |   < STRING: "string" >
+|   < DELETED: "@deleted" >
 }
 
 TOKEN : {
@@ -204,15 +205,21 @@ void struct():
 
 void field():
 {/*@bgen(jjtree) field */
-  ASTfield jjtn000 = new ASTfield(JJTFIELD);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+    ASTfield jjtn000 = new ASTfield(JJTFIELD);
+    boolean jjtc000 = true;
+    jjtree.openNodeScope(jjtn000);
 /*@egen*/
+    Token t = null;
 }
 {/*@bgen(jjtree) field */
     try {
 /*@egen*/
-    type_identifier() identifier() ";"/*@bgen(jjtree)*/
+    (t=field_annotation())? type_identifier() identifier() ";"/*@bgen(jjtree)*/
+                                                               {
+                                                                 jjtree.closeNodeScope(jjtn000, true);
+                                                                 jjtc000 = false;
+                                                               }
+/*@egen*/ { jjtn000.setDeleted(t != null); }/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -236,10 +243,17 @@ void field():
 }
 
 void type_identifier()       :
-{
-}
+{}
 {
     primitive_type() // | <ID> | <LIST> "<" type_identifier() ">"
+}
+
+Token field_annotation()       :
+{
+    Token t;
+}
+{
+    (t=<DELETED>) { return t; }
 }
 
 void primitive_type()                :

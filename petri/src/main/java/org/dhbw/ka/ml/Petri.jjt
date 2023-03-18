@@ -30,6 +30,7 @@ TOKEN : {
 |   < FLOAT32: "float32" >
 |   < FLOAT64: "float64" >
 |   < STRING: "string" >
+|   < DELETED: "@deleted" >
 }
 
 TOKEN : {
@@ -62,16 +63,24 @@ void struct():
 
 void field():
 {
+    Token t = null;
 }
 {
-    type_identifier() identifier() ";"
+    (t=field_annotation())? type_identifier() identifier() ";" { jjtThis.setDeleted(t != null); }
 }
 
 void type_identifier() #void :
-{
-}
+{}
 {
     primitive_type() // | <ID> | <LIST> "<" type_identifier() ">"
+}
+
+Token field_annotation() #void :
+{
+    Token t;
+}
+{
+    (t=<DELETED>) { return t; }
 }
 
 void primitive_type() #PrimitiveType :

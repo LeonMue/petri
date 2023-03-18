@@ -48,6 +48,10 @@ public class Getter implements PetriVisitor {
 
     @Override
     public Object visit(ASTfield node, Object data) {
+        if (node.isDeleted()) {
+            return null;
+        }
+
         node.childrenAccept(this, data);
         final var fieldIdentUppercase = JavaNameConventions.firstLetterUpperCase(this.fieldIdent);
         try {
