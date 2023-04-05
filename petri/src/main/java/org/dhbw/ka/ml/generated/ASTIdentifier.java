@@ -4,9 +4,11 @@ package org.dhbw.ka.ml.generated;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class ASTIdentifier extends SimpleNode {
   private String ident;
   private int beginColumn;

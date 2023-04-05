@@ -60,7 +60,7 @@ void struct():
     ASTIdentifier parent = null;
 }
 {
-    <STRUCT> ident=identifier() ((":" parent=identifier())?) "{" (field())* #fields "}"
+    <STRUCT> ident=identifier(false) ((":" parent=identifier(false))?) "{" ((field())*) #fields "}"
     {
         jjtThis.setIdent(ident);
         jjtThis.setParent(parent);
@@ -74,7 +74,7 @@ void field():
     ASTIdentifier ident;
 }
 {
-    (t=field_annotation())? type=type_identifier() ident=identifier() ";"
+    (t=field_annotation())? type=type_identifier() ident=identifier(false) ";"
     {
         jjtThis.setDeleted(t != null);
         jjtThis.setType(type);
@@ -90,7 +90,7 @@ SimpleNode type_identifier() #void :
     (
     t=primitive_type()
     |
-    t=identifier()
+    t=identifier(false)
     ) { return t; }
     // | <LIST> "<" type_identifier() ">"
 }
@@ -129,7 +129,7 @@ ASTPrimitiveType primitive_type() #PrimitiveType :
     }
 }
 
-ASTIdentifier identifier() #Identifier :
+ASTIdentifier identifier(boolean b) #Identifier(b) :
 {
     Token t;
 }

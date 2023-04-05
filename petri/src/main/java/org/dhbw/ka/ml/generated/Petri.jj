@@ -128,33 +128,33 @@ void struct():
 {/*@bgen(jjtree) struct */
     try {
 /*@egen*/
-    <STRUCT> ident=identifier() ((":" parent=identifier())?) "{"/*@bgen(jjtree) fields */
-                                                                 {
-                                                                   ASTfields jjtn001 = new ASTfields(JJTFIELDS);
-                                                                   boolean jjtc001 = true;
-                                                                   jjtree.openNodeScope(jjtn001);
-                                                                 }
-                                                                 try {
-/*@egen*/ (field())*/*@bgen(jjtree)*/
-                                                                 } catch (Throwable jjte001) {
-                                                                   if (jjtc001) {
-                                                                     jjtree.clearNodeScope(jjtn001);
-                                                                     jjtc001 = false;
-                                                                   } else {
-                                                                     jjtree.popNode();
-                                                                   }
-                                                                   if (jjte001 instanceof RuntimeException) {
-                                                                     throw (RuntimeException)jjte001;
-                                                                   }
-                                                                   if (jjte001 instanceof ParseException) {
-                                                                     throw (ParseException)jjte001;
-                                                                   }
-                                                                   throw (Error)jjte001;
-                                                                 } finally {
-                                                                   if (jjtc001) {
-                                                                     jjtree.closeNodeScope(jjtn001, true);
-                                                                   }
-                                                                 }
+    <STRUCT> ident=identifier(false) ((":" parent=identifier(false))?) "{"/*@bgen(jjtree) fields */
+                                                                           {
+                                                                             ASTfields jjtn001 = new ASTfields(JJTFIELDS);
+                                                                             boolean jjtc001 = true;
+                                                                             jjtree.openNodeScope(jjtn001);
+                                                                           }
+                                                                           try {
+/*@egen*/ ((field())*)/*@bgen(jjtree)*/
+                                                                           } catch (Throwable jjte001) {
+                                                                             if (jjtc001) {
+                                                                               jjtree.clearNodeScope(jjtn001);
+                                                                               jjtc001 = false;
+                                                                             } else {
+                                                                               jjtree.popNode();
+                                                                             }
+                                                                             if (jjte001 instanceof RuntimeException) {
+                                                                               throw (RuntimeException)jjte001;
+                                                                             }
+                                                                             if (jjte001 instanceof ParseException) {
+                                                                               throw (ParseException)jjte001;
+                                                                             }
+                                                                             throw (Error)jjte001;
+                                                                           } finally {
+                                                                             if (jjtc001) {
+                                                                               jjtree.closeNodeScope(jjtn001, true);
+                                                                             }
+                                                                           }
 /*@egen*/         "}"/*@bgen(jjtree)*/
     {
       jjtree.closeNodeScope(jjtn000, true);
@@ -200,7 +200,7 @@ void field():
 {/*@bgen(jjtree) field */
     try {
 /*@egen*/
-    (t=field_annotation())? type=type_identifier() ident=identifier() ";"/*@bgen(jjtree)*/
+    (t=field_annotation())? type=type_identifier() ident=identifier(false) ";"/*@bgen(jjtree)*/
     {
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
@@ -241,7 +241,7 @@ SimpleNode type_identifier()       :
     (
     t=primitive_type()
     |
-    t=identifier()
+    t=identifier(false)
     ) { return t; }
     // | <LIST> "<" type_identifier() ">"
 }
@@ -297,20 +297,20 @@ ASTPrimitiveType primitive_type()                :
 /*@egen*/
 }
 
-ASTIdentifier identifier()             :
-{/*@bgen(jjtree) Identifier */
+ASTIdentifier identifier(boolean b)                :
+{/*@bgen(jjtree) #Identifier( b) */
     ASTIdentifier jjtn000 = new ASTIdentifier(JJTIDENTIFIER);
     boolean jjtc000 = true;
     jjtree.openNodeScope(jjtn000);
 /*@egen*/
     Token t;
 }
-{/*@bgen(jjtree) Identifier */
+{/*@bgen(jjtree) #Identifier( b) */
     try {
 /*@egen*/
     (t=<ID>)/*@bgen(jjtree)*/
     {
-      jjtree.closeNodeScope(jjtn000, true);
+      jjtree.closeNodeScope(jjtn000,  b);
       jjtc000 = false;
     }
 /*@egen*/
@@ -322,7 +322,7 @@ ASTIdentifier identifier()             :
     }/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
+        jjtree.closeNodeScope(jjtn000,  b);
       }
     }
 /*@egen*/

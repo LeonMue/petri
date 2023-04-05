@@ -4,6 +4,7 @@ import org.apache.commons.cli.*;
 import org.dhbw.ka.ml.astmodification.AssignFieldNumbers;
 import org.dhbw.ka.ml.codegen.java.JavaCodeGenerator;
 import org.dhbw.ka.ml.generated.Petri;
+import org.dhbw.ka.ml.semantic.IsDeclaredSemantic;
 import org.dhbw.ka.ml.semantic.scopeduplications.ScopedIdentDuplications;
 
 import java.io.FileNotFoundException;
@@ -92,13 +93,7 @@ public class Main {
                     javaPackage
             ), null);
 
-            /*rootNode.jjtAccept(
-                    new JavaGenVisitor(
-                            generationPath,
-                            javaPackage
-                    ),
-                    null
-            );*/
+            IsDeclaredSemantic.check(rootNode);
         }
     }
 

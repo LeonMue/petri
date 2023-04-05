@@ -83,20 +83,20 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
     ASTIdentifier parent = null;
     try {
       jj_consume_token(STRUCT);
-      ident = identifier();
+      ident = identifier(false);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 19:
         jj_consume_token(19);
-        parent = identifier();
+        parent = identifier(false);
         break;
       default:
         jj_la1[1] = jj_gen;
         ;
       }
       jj_consume_token(20);
-                                                                   ASTfields jjtn001 = new ASTfields(JJTFIELDS);
-                                                                   boolean jjtc001 = true;
-                                                                   jjtree.openNodeScope(jjtn001);
+                                                                             ASTfields jjtn001 = new ASTfields(JJTFIELDS);
+                                                                             boolean jjtc001 = true;
+                                                                             jjtree.openNodeScope(jjtn001);
       try {
         label_2:
         while (true) {
@@ -118,23 +118,23 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
           field();
         }
       } catch (Throwable jjte001) {
-                                                                   if (jjtc001) {
-                                                                     jjtree.clearNodeScope(jjtn001);
-                                                                     jjtc001 = false;
-                                                                   } else {
-                                                                     jjtree.popNode();
-                                                                   }
-                                                                   if (jjte001 instanceof RuntimeException) {
-                                                                     {if (true) throw (RuntimeException)jjte001;}
-                                                                   }
-                                                                   if (jjte001 instanceof ParseException) {
-                                                                     {if (true) throw (ParseException)jjte001;}
-                                                                   }
-                                                                   {if (true) throw (Error)jjte001;}
+                                                                             if (jjtc001) {
+                                                                               jjtree.clearNodeScope(jjtn001);
+                                                                               jjtc001 = false;
+                                                                             } else {
+                                                                               jjtree.popNode();
+                                                                             }
+                                                                             if (jjte001 instanceof RuntimeException) {
+                                                                               {if (true) throw (RuntimeException)jjte001;}
+                                                                             }
+                                                                             if (jjte001 instanceof ParseException) {
+                                                                               {if (true) throw (ParseException)jjte001;}
+                                                                             }
+                                                                             {if (true) throw (Error)jjte001;}
       } finally {
-                                                                   if (jjtc001) {
-                                                                     jjtree.closeNodeScope(jjtn001, true);
-                                                                   }
+                                                                             if (jjtc001) {
+                                                                               jjtree.closeNodeScope(jjtn001, true);
+                                                                             }
       }
       jj_consume_token(21);
       jjtree.closeNodeScope(jjtn000, true);
@@ -179,7 +179,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
         ;
       }
       type = type_identifier();
-      ident = identifier();
+      ident = identifier(false);
       jj_consume_token(22);
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
@@ -219,7 +219,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
       t = primitive_type();
       break;
     case ID:
-      t = identifier();
+      t = identifier(false);
       break;
     default:
       jj_la1[4] = jj_gen;
@@ -281,14 +281,14 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
     throw new Error("Missing return statement in function");
   }
 
-  final public ASTIdentifier identifier() throws ParseException {
- /*@bgen(jjtree) Identifier */
+  final public ASTIdentifier identifier(boolean b) throws ParseException {
+ /*@bgen(jjtree) #Identifier( b) */
     ASTIdentifier jjtn000 = new ASTIdentifier(JJTIDENTIFIER);
     boolean jjtc000 = true;
     jjtree.openNodeScope(jjtn000);Token t;
     try {
       t = jj_consume_token(ID);
-      jjtree.closeNodeScope(jjtn000, true);
+      jjtree.closeNodeScope(jjtn000,  b);
       jjtc000 = false;
         jjtn000.setIdent(t.image);
         jjtn000.setBeginColumn(t.beginColumn);
@@ -296,7 +296,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
         {if (true) return jjtn000;}
     } finally {
       if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
+        jjtree.closeNodeScope(jjtn000,  b);
       }
     }
     throw new Error("Missing return statement in function");
