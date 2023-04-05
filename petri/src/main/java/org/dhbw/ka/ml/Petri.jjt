@@ -56,23 +56,43 @@ void complex_type() #void :
 
 void struct():
 {
+    ASTIdentifier ident;
+    ASTIdentifier parent = null;
 }
 {
-    <STRUCT> identifier() ((":" identifier())? #ParentIdentifier) "{" (field())* #fields "}"
+    <STRUCT> ident=identifier() ((":" parent=identifier())?) "{" (field())* #fields "}"
+    {
+        jjtThis.setIdent(ident);
+        jjtThis.setParent(parent);
+    }
 }
 
 void field():
 {
     Token t = null;
+    SimpleNode type;
+    ASTIdentifier ident;
 }
 {
-    (t=field_annotation())? type_identifier() identifier() ";" { jjtThis.setDeleted(t != null); }
+    (t=field_annotation())? type=type_identifier() ident=identifier() ";"
+    {
+        jjtThis.setDeleted(t != null);
+        jjtThis.setType(type);
+        jjtThis.setIdent(ident);
+    }
 }
 
-void type_identifier() #void :
-{}
+SimpleNode type_identifier() #void :
 {
-    primitive_type() // | <ID> | <LIST> "<" type_identifier() ">"
+    SimpleNode t;
+}
+{
+    (
+    t=primitive_type()
+    |
+    t=identifier()
+    ) { return t; }
+    // | <LIST> "<" type_identifier() ">"
 }
 
 Token field_annotation() #void :
@@ -83,12 +103,13 @@ Token field_annotation() #void :
     (t=<DELETED>) { return t; }
 }
 
-void primitive_type() #PrimitiveType :
+ASTPrimitiveType primitive_type() #PrimitiveType :
 {
     Token t;
 }
 {
-    (t=<BOOL>
+    (
+    t=<BOOL>
     |
     t=<INT32>
     |
@@ -98,13 +119,26 @@ void primitive_type() #PrimitiveType :
     |
     t=<FLOAT64>
     |
-    t=<STRING>) { jjtThis.setType(t.image); jjtThis.setBeginColumn(t.beginColumn); jjtThis.setBeginLine(t.beginLine); }
+    t=<STRING>
+    )
+    {
+        jjtThis.setType(t.image);
+        jjtThis.setBeginColumn(t.beginColumn);
+        jjtThis.setBeginLine(t.beginLine);
+        return jjtThis;
+    }
 }
 
-void identifier() #Identifier :
+ASTIdentifier identifier() #Identifier :
 {
     Token t;
 }
 {
-    (t=<ID>) { jjtThis.setIdent(t.image); jjtThis.setBeginColumn(t.beginColumn); jjtThis.setBeginLine(t.beginLine); }
+    (t=<ID>)
+    {
+        jjtThis.setIdent(t.image);
+        jjtThis.setBeginColumn(t.beginColumn);
+        jjtThis.setBeginLine(t.beginLine);
+        return jjtThis;
+    }
 }

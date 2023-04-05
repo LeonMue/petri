@@ -12,6 +12,8 @@ import lombok.ToString;
 public class ASTfield extends SimpleNode {
   private int fieldNumber;
   private boolean isDeleted;
+  private SimpleNode type;
+  private ASTIdentifier ident;
   public ASTfield(int id) {
     super(id);
   }

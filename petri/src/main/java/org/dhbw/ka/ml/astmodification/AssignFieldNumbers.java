@@ -28,11 +28,6 @@ public class AssignFieldNumbers implements PetriVisitor {
     }
 
     @Override
-    public Object visit(ASTParentIdentifier node, Object data) {
-        return null;
-    }
-
-    @Override
     public Object visit(ASTfields node, Object data) {
         return node.childrenAccept(this, null);
     }

@@ -2,7 +2,7 @@ package org.dhbw.ka.ml.codegen.java;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.dhbw.ka.ml.codegen.java.field.serializing.PetriTypeToPetriSerializableMapper;
+import org.dhbw.ka.ml.codegen.java.field.serializing.JavaTypeToPetriSerializableMapper;
 import org.dhbw.ka.ml.generated.*;
 
 import java.io.Writer;
@@ -11,9 +11,7 @@ import java.io.Writer;
 public class MethodDeserialize implements PetriVisitor {
     private final Writer out;
     private final String structIdent;
-    private String fieldIdent;
-    private String typeIdent;
-    private final PetriTypeToPetriSerializableMapper petriTypeToPetriSerializableMapper = new PetriTypeToPetriSerializableMapper();
+    private final JavaTypeToPetriSerializableMapper javaTypeToPetriSerializableMapper = new JavaTypeToPetriSerializableMapper();
 
     @Override
     public Object visit(SimpleNode node, Object data) {
@@ -32,11 +30,6 @@ public class MethodDeserialize implements PetriVisitor {
 
     @Override
     public Object visit(ASTstruct node, Object data) {
-        return null;
-    }
-
-    @Override
-    public Object visit(ASTParentIdentifier node, Object data) {
         return null;
     }
 
@@ -82,17 +75,20 @@ public class MethodDeserialize implements PetriVisitor {
     @Override
     public Object visit(ASTfield node, Object data) {
         node.childrenAccept(this, null);
+        final var typeIdent = FieldTypeIdent.analyze(node.getType()).ident();
+        final var fieldIdent = node.getIdent().getIdent();
+        final var fieldIdentUppercase = JavaNameConventions.firstLetterUpperCase(fieldIdent);
         this.out.write(String.format(
                 "case (%d): {",
                 node.getFieldNumber()
         ));
-        final var serializable = this.petriTypeToPetriSerializableMapper.apply(this.typeIdent);
+        final var serializable = this.javaTypeToPetriSerializableMapper.apply(typeIdent);
         if (node.isDeleted()) {
             this.out.write(serializable.skip("in") + ";");
         } else {
             this.out.write(String.format(
                     "value.set%s(%s);",
-                    JavaNameConventions.firstLetterUpperCase(this.fieldIdent),
+                    fieldIdentUppercase,
                     serializable.deserializeDataInput("in")
             ));
         }
@@ -103,13 +99,11 @@ public class MethodDeserialize implements PetriVisitor {
 
     @Override
     public Object visit(ASTPrimitiveType node, Object data) {
-        this.typeIdent = node.getType();
         return null;
     }
 
     @Override
     public Object visit(ASTIdentifier node, Object data) {
-        this.fieldIdent = node.getIdent();
         return null;
     }
 }

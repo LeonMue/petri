@@ -10,11 +10,6 @@ import java.io.Writer;
 public class Setter implements PetriVisitor {
 
     private final Writer out;
-    private String typeIdent;
-    private String fieldIdent;
-    private boolean isNullable;
-
-    private final PetriTypeToJavaTypeMapper petriTypeToJavaTypeMapper = new PetriTypeToJavaTypeMapper();
 
     @Override
     public Object visit(SimpleNode node, Object data) {
@@ -37,11 +32,6 @@ public class Setter implements PetriVisitor {
     }
 
     @Override
-    public Object visit(ASTParentIdentifier node, Object data) {
-        return null;
-    }
-
-    @Override
     public Object visit(ASTfields node, Object data) {
         return null;
     }
@@ -52,22 +42,27 @@ public class Setter implements PetriVisitor {
             return null;
         }
 
+        final var fieldTypeIdentAnalysis = FieldTypeIdent.analyze(node.getType());
+        final var typeIdent = fieldTypeIdentAnalysis.ident();
+        final var isNullable = fieldTypeIdentAnalysis.isNullable();
+        final var fieldIdent = node.getIdent().getIdent();
+        final var fieldIdentUppercase = JavaNameConventions.firstLetterUpperCase(fieldIdent);
         node.childrenAccept(this, null);
         try {
             this.out.write(String.format(
                     "public void set%s(%s value) {",
-                    JavaNameConventions.firstLetterUpperCase(this.fieldIdent),
-                    this.typeIdent
+                    fieldIdentUppercase,
+                    typeIdent
             ));
-            if (!this.isNullable) {
+            if (!isNullable) {
                 this.out.write(String.format(
                         "this.has%s = true;",
-                        JavaNameConventions.firstLetterUpperCase(this.fieldIdent)
+                        fieldIdentUppercase
                 ));
             }
             this.out.write(String.format(
                     "this.%s = value;",
-                    this.fieldIdent
+                    fieldIdent
             ));
             this.out.write("}");  // set
         } catch (IOException e) {
@@ -78,14 +73,11 @@ public class Setter implements PetriVisitor {
 
     @Override
     public Object visit(ASTPrimitiveType node, Object data) {
-        this.typeIdent = this.petriTypeToJavaTypeMapper.apply(node.getType());
-        this.isNullable = node.getType().equals("string");
         return null;
     }
 
     @Override
     public Object visit(ASTIdentifier node, Object data) {
-        this.fieldIdent = node.getIdent();
         return null;
     }
 }

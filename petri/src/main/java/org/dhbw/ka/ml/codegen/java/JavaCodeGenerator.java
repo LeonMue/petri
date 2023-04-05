@@ -8,8 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JavaCodeGenerator implements PetriVisitor {
@@ -35,7 +33,7 @@ public class JavaCodeGenerator implements PetriVisitor {
 
     @Override
     public Object visit(ASTstruct node, Object data) {
-        final var nodeIdent = ((List<String>) node.childrenAccept(new GetNodeIdentifier(), new ArrayList<String>())).get(0);
+        final var nodeIdent = node.getIdent().getIdent();
         final var filePath = Paths.get(this.outPath.toString(), nodeIdent + ".java");
         try (final var out = new BufferedWriter(new FileWriter(filePath.toFile()))) {
             this.out = out;
@@ -49,11 +47,6 @@ public class JavaCodeGenerator implements PetriVisitor {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return null;
-    }
-
-    @Override
-    public Object visit(ASTParentIdentifier node, Object data) {
         return null;
     }
 

@@ -1,7 +1,6 @@
 package org.dhbw.ka.ml.semantic.scopeduplications;
 
 import org.dhbw.ka.ml.generated.*;
-import org.dhbw.ka.ml.semantic.scopeduplications.IdentifierAlreadyDeclaredException;
 
 import java.util.HashSet;
 
@@ -23,11 +22,17 @@ public class ScopedStructIdentDuplications implements PetriVisitor {
 
     @Override
     public Object visit(ASTstruct node, Object data) {
-        return node.childrenAccept(this, data);
-    }
-
-    @Override
-    public Object visit(ASTParentIdentifier node, Object data) {
+        final var nodeIdent = node.getIdent().getIdent();
+        final var symbolTable = (HashSet<String>) data;
+        if (symbolTable.contains(nodeIdent)) {
+            throw new IdentifierAlreadyDeclaredException(String.format(
+                    "[line: %d, column: %d] The identifier %s is already declared in the same scope. Make sure an identifier is unique",
+                    node.getIdent().getBeginLine(),
+                    node.getIdent().getBeginColumn(),
+                    nodeIdent
+            ));
+        }
+        symbolTable.add(nodeIdent);
         return null;
     }
 
@@ -48,16 +53,6 @@ public class ScopedStructIdentDuplications implements PetriVisitor {
 
     @Override
     public Object visit(ASTIdentifier node, Object data) {
-        final var symbolTable = (HashSet<String>) data;
-        if (symbolTable.contains(node.getIdent())) {
-            throw new IdentifierAlreadyDeclaredException(String.format(
-                    "[line: %d, column: %d] The identifier %s is already declared in the same scope. Make sure an identifier is unique",
-                    node.getBeginLine(),
-                    node.getBeginColumn(),
-                    node.getIdent()
-            ));
-        }
-        symbolTable.add(node.getIdent());
         return null;
     }
 }

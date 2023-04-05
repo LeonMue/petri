@@ -2,7 +2,16 @@
 /* JavaCCOptions:MULTI=true,NODE_USES_PARSER=false,VISITOR=true,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY= */
 package org.dhbw.ka.ml.generated;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class ASTstruct extends SimpleNode {
+  ASTIdentifier ident;
+  ASTIdentifier parent;
   public ASTstruct(int id) {
     super(id);
   }

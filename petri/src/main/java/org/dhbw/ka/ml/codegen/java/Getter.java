@@ -10,11 +10,6 @@ import java.io.Writer;
 public class Getter implements PetriVisitor {
 
     private final Writer out;
-    private final PetriTypeToJavaTypeMapper petriTypeToJavaTypeMapper = new PetriTypeToJavaTypeMapper();
-
-    private String typeIdent;
-    private String fieldIdent;
-    private boolean isNullable;
 
     @Override
     public Object visit(SimpleNode node, Object data) {
@@ -37,11 +32,6 @@ public class Getter implements PetriVisitor {
     }
 
     @Override
-    public Object visit(ASTParentIdentifier node, Object data) {
-        return null;
-    }
-
-    @Override
     public Object visit(ASTfields node, Object data) {
         return null;
     }
@@ -52,24 +42,27 @@ public class Getter implements PetriVisitor {
             return null;
         }
 
-        node.childrenAccept(this, data);
-        final var fieldIdentUppercase = JavaNameConventions.firstLetterUpperCase(this.fieldIdent);
+        final var fieldTypeIdentAnalysis = FieldTypeIdent.analyze(node.getType());
+        final var fieldType = fieldTypeIdentAnalysis.ident();
+        final var isNullable = fieldTypeIdentAnalysis.isNullable();
+        final var fieldIdent = node.getIdent().getIdent();
+        final var fieldIdentUppercase = JavaNameConventions.firstLetterUpperCase(fieldIdent);
         try {
             this.out.write(String.format(
                     "public %s get%s() {",
-                    this.typeIdent,
+                    fieldType,
                     fieldIdentUppercase
             ));
             this.out.write(String.format(
                     "return this.%s;",
-                    this.fieldIdent
+                    fieldIdent
             ));
             this.out.write("}");  // get
             this.out.write(String.format(
                     "public boolean has%s() {",
                     fieldIdentUppercase
             ));
-            if (!this.isNullable) {
+            if (!isNullable) {
                 this.out.write(String.format(
                         "return this.has%s;",
                         fieldIdentUppercase
@@ -77,7 +70,7 @@ public class Getter implements PetriVisitor {
             } else {
                 this.out.write(String.format(
                         "return this.%s != null;",
-                        this.fieldIdent
+                        fieldIdent
                 ));
             }
             this.out.write("}");  // hasFieldIdent
@@ -89,14 +82,11 @@ public class Getter implements PetriVisitor {
 
     @Override
     public Object visit(ASTPrimitiveType node, Object data) {
-        this.typeIdent = this.petriTypeToJavaTypeMapper.apply(node.getType());
-        this.isNullable = node.getType().equals("string");
         return null;
     }
 
     @Override
     public Object visit(ASTIdentifier node, Object data) {
-        this.fieldIdent = node.getIdent();
         return null;
     }
 }

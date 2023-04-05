@@ -7,10 +7,9 @@ public interface PetriVisitor
   public Object visit(ASTroot node, Object data);
   public Object visit(ASTComplexTypes node, Object data);
   public Object visit(ASTstruct node, Object data);
-  public Object visit(ASTParentIdentifier node, Object data);
   public Object visit(ASTfields node, Object data);
   public Object visit(ASTfield node, Object data);
   public Object visit(ASTPrimitiveType node, Object data);
   public Object visit(ASTIdentifier node, Object data);
 }
-/* JavaCC - OriginalChecksum=4e851c1fe9fbcdaeb1b0dec91773dd2b (do not edit this line) */
+/* JavaCC - OriginalChecksum=65c5214c7fe999d7cfcb4369077e80b0 (do not edit this line) */

@@ -10,12 +10,6 @@ import java.io.Writer;
 public class FieldDeclaration implements PetriVisitor {
     private final Writer out;
 
-    private String typeIdent;
-    private String fieldIdent;
-
-    private final PetriTypeToJavaTypeMapper petriTypeToJavaTypeMapper = new PetriTypeToJavaTypeMapper();
-    private boolean isNullable;
-
     @Override
     public Object visit(SimpleNode node, Object data) {
         return null;
@@ -37,11 +31,6 @@ public class FieldDeclaration implements PetriVisitor {
     }
 
     @Override
-    public Object visit(ASTParentIdentifier node, Object data) {
-        return null;
-    }
-
-    @Override
     public Object visit(ASTfields node, Object data) {
         return null;
     }
@@ -52,17 +41,18 @@ public class FieldDeclaration implements PetriVisitor {
             return null;
         }
 
-        node.childrenAccept(this, null);
+        final var fieldTypeAnalysis = FieldTypeIdent.analyze(node.getType());
+        final var fieldIdent = node.getIdent().getIdent();
         try {
             this.out.write(String.format(
                     "private %s %s;",
-                    this.typeIdent,
-                    this.fieldIdent
+                    fieldTypeAnalysis.ident(),
+                    fieldIdent
             ));
-            if (!this.isNullable) {
+            if (!fieldTypeAnalysis.isNullable()) {
                 this.out.write(String.format(
                         "private boolean has%s = false;",
-                        JavaNameConventions.firstLetterUpperCase(this.fieldIdent)
+                        JavaNameConventions.firstLetterUpperCase(fieldIdent)
                 ));
             }
         } catch (IOException e) {
@@ -73,14 +63,11 @@ public class FieldDeclaration implements PetriVisitor {
 
     @Override
     public Object visit(ASTPrimitiveType node, Object data) {
-        this.typeIdent = this.petriTypeToJavaTypeMapper.apply(node.getType());
-        this.isNullable = node.getType().equals("string");
         return null;
     }
 
     @Override
     public Object visit(ASTIdentifier node, Object data) {
-        this.fieldIdent = node.getIdent();
         return null;
     }
 }
