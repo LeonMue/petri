@@ -15,7 +15,13 @@ public class SyntaxTest {
     private Path basePath = Paths.get("src", "test", "resources");
 
     @ParameterizedTest
-    @ValueSource(strings = { "empty_struct.petri", "duplicated_field_ident.petri", "nothing.petri", "more_complex.petri" })
+    @ValueSource(strings = {
+            "empty_struct.petri",
+            "duplicated_field_ident.petri",
+            "nothing.petri",
+            "more_complex.petri",
+            "semantic_valid_complex_object_types.petri"
+    })
     void validFiles_should_notThrowParseException(String filename) throws FileNotFoundException {
         var filePath = Paths.get(this.basePath.toString(), filename);
         var parser = new Petri(new FileReader(filePath.toFile()));
@@ -23,7 +29,7 @@ public class SyntaxTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "key_words_as_identifier.petri" })
+    @ValueSource(strings = { "key_words_as_identifier.petri", "piano.petri" })
     void invalidFiles_should_throwException(String filename) throws FileNotFoundException {
         var filePath = Paths.get(this.basePath.toString(), filename);
         var parser = new Petri(new FileReader(filePath.toFile()));

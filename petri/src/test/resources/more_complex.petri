@@ -2,11 +2,13 @@ struct Type {
     bool bool1;
     int32 i;
     int64 l;
+    Type t;
     float32 _1;
     @deleted
     float64 dl;
     string name;
     string o;
+    Type2 t2;
 }
 
 # this is the second message

@@ -54,10 +54,12 @@ public class FieldNumberModificationTest implements PetriVisitor {
             case "bool1" -> fieldNumber = 0;
             case "i" -> fieldNumber = 1;
             case "l" -> fieldNumber = 2;
-            case "_1" -> fieldNumber = 3;
-            case "dl" -> fieldNumber = 4;
-            case "name" -> fieldNumber = 5;
-            case "o" -> fieldNumber = 6;
+            case "t" -> fieldNumber = 3;
+            case "_1" -> fieldNumber = 4;
+            case "dl" -> fieldNumber = 5;
+            case "name" -> fieldNumber = 6;
+            case "o" -> fieldNumber = 7;
+            case "t2" -> fieldNumber = 8;
             case "__11" -> fieldNumber = 0;
             case "l_ol__1234" -> fieldNumber = 1;
         }
