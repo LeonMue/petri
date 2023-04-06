@@ -1,11 +1,13 @@
 package org.dhbw.ka.ml.codegen.java.field.serializing;
 
+import java.io.Writer;
+
 public interface PetriSerializable {
 
-    String serializeDataOutput(String value, String dataOutput);
+    void serializeDataOutput(String value, String dataOutput, Writer out);
 
-    String deserializeDataInput(String dataInput);
+    String deserializeDataInput(String dataInput, Writer out);
 
-    String skip(String dataInput);
+    void skip(String dataInput, Writer out);
 
 }

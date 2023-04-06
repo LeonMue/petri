@@ -88,7 +88,7 @@ SimpleNode type_identifier() #void :
 }
 {
     (
-    t=primitive_type()
+    t=primitive_type(false)
     |
     t=identifier(false)
     ) { return t; }
@@ -103,7 +103,7 @@ Token field_annotation() #void :
     (t=<DELETED>) { return t; }
 }
 
-ASTPrimitiveType primitive_type() #PrimitiveType :
+ASTPrimitiveType primitive_type(boolean b) #PrimitiveType(b) :
 {
     Token t;
 }

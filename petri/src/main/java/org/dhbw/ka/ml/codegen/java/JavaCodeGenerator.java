@@ -39,10 +39,14 @@ public class JavaCodeGenerator implements PetriVisitor {
             this.out = out;
             this.out.write(String.format("package %s;", this.javaPackage));
             this.out.write("import java.io.*;");
-            this.out.write(String.format("public class %s {", nodeIdent));
+            this.out.write(String.format(
+                    "public class %s {",
+                    nodeIdent
+            ));
             node.childrenAccept(this, null);
             node.childrenAccept(new MethodSerialize(this.out), null);
             node.childrenAccept(new MethodDeserialize(this.out, nodeIdent), null);
+            new InternalDeserializeMethod(this.out).generate(node);
             out.write("}");
         } catch (IOException e) {
             throw new RuntimeException(e);

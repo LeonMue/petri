@@ -6,7 +6,7 @@ public class FieldTypeIdent {
 
     public static Result analyze(SimpleNode typeIdent) {
         final var internalVisitor = new Visitor();
-        typeIdent.childrenAccept(internalVisitor, null);
+        typeIdent.jjtAccept(internalVisitor, null);
         return internalVisitor.result;
     }
 

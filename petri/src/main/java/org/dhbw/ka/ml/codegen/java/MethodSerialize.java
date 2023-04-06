@@ -1,7 +1,7 @@
 package org.dhbw.ka.ml.codegen.java;
 
 import lombok.RequiredArgsConstructor;
-import org.dhbw.ka.ml.codegen.java.field.serializing.JavaTypeToPetriSerializableMapper;
+import org.dhbw.ka.ml.codegen.java.field.serializing.PetriTypeToPetriSerializableMapper;
 import org.dhbw.ka.ml.generated.*;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class MethodSerialize implements PetriVisitor {
 
     private final Writer out;
 
-    private final JavaTypeToPetriSerializableMapper javaTypeToPetriSerializableMapper = new JavaTypeToPetriSerializableMapper();
+    private static final PetriTypeToPetriSerializableMapper PETRI_TYPE_TO_PETRI_SERIALIZABLE_MAPPER = new PetriTypeToPetriSerializableMapper();
 
     @Override
     public Object visit(SimpleNode node, Object data) {
@@ -60,7 +60,6 @@ public class MethodSerialize implements PetriVisitor {
             return null;
         }
 
-        final var typeIdent = FieldTypeIdent.analyze(node.getType()).ident();
         final var fieldIdent = node.getIdent().getIdent();
         final var fieldIdentUppercase = JavaNameConventions.firstLetterUpperCase(fieldIdent);
         try {
@@ -73,12 +72,9 @@ public class MethodSerialize implements PetriVisitor {
                     node.getFieldNumber()
             ));
             this.out.write("out.write(fieldNumber);");
-            this.out.write(String.format(
-                    "%s;",
-                    this.javaTypeToPetriSerializableMapper
-                            .apply(typeIdent)
-                            .serializeDataOutput("this." + fieldIdent, "out")
-            ));
+            PETRI_TYPE_TO_PETRI_SERIALIZABLE_MAPPER
+                    .apply(node.getType())
+                    .serializeDataOutput("this." + fieldIdent, "out", out);
             this.out.write("}");  // if
         } catch (IOException e) {
             throw new RuntimeException(e);

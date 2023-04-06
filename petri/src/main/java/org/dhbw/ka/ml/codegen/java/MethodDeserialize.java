@@ -2,7 +2,7 @@ package org.dhbw.ka.ml.codegen.java;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.dhbw.ka.ml.codegen.java.field.serializing.JavaTypeToPetriSerializableMapper;
+import org.dhbw.ka.ml.codegen.java.field.serializing.PetriTypeToPetriSerializableMapper;
 import org.dhbw.ka.ml.generated.*;
 
 import java.io.Writer;
@@ -11,7 +11,7 @@ import java.io.Writer;
 public class MethodDeserialize implements PetriVisitor {
     private final Writer out;
     private final String structIdent;
-    private final JavaTypeToPetriSerializableMapper javaTypeToPetriSerializableMapper = new JavaTypeToPetriSerializableMapper();
+    private static final PetriTypeToPetriSerializableMapper PETRI_TYPE_TO_PETRI_SERIALIZABLE_MAPPER = new PetriTypeToPetriSerializableMapper();
 
     @Override
     public Object visit(SimpleNode node, Object data) {
@@ -74,22 +74,21 @@ public class MethodDeserialize implements PetriVisitor {
     @SneakyThrows
     @Override
     public Object visit(ASTfield node, Object data) {
-        node.childrenAccept(this, null);
-        final var typeIdent = FieldTypeIdent.analyze(node.getType()).ident();
         final var fieldIdent = node.getIdent().getIdent();
         final var fieldIdentUppercase = JavaNameConventions.firstLetterUpperCase(fieldIdent);
         this.out.write(String.format(
                 "case (%d): {",
                 node.getFieldNumber()
         ));
-        final var serializable = this.javaTypeToPetriSerializableMapper.apply(typeIdent);
+        final var serializable = PETRI_TYPE_TO_PETRI_SERIALIZABLE_MAPPER.apply(node.getType());
         if (node.isDeleted()) {
-            this.out.write(serializable.skip("in") + ";");
+            serializable.skip("in", out);
         } else {
+            final var deserialized = serializable.deserializeDataInput("in", out);
             this.out.write(String.format(
                     "value.set%s(%s);",
                     fieldIdentUppercase,
-                    serializable.deserializeDataInput("in")
+                    deserialized
             ));
         }
         this.out.write("break;");

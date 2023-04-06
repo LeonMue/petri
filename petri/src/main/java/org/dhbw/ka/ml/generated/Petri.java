@@ -216,7 +216,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
     case FLOAT32:
     case FLOAT64:
     case STRING:
-      t = primitive_type();
+      t = primitive_type(false);
       break;
     case ID:
       t = identifier(false);
@@ -237,8 +237,8 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
     throw new Error("Missing return statement in function");
   }
 
-  final public ASTPrimitiveType primitive_type() throws ParseException {
- /*@bgen(jjtree) PrimitiveType */
+  final public ASTPrimitiveType primitive_type(boolean b) throws ParseException {
+ /*@bgen(jjtree) #PrimitiveType( b) */
     ASTPrimitiveType jjtn000 = new ASTPrimitiveType(JJTPRIMITIVETYPE);
     boolean jjtc000 = true;
     jjtree.openNodeScope(jjtn000);Token t;
@@ -267,7 +267,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
         jj_consume_token(-1);
         throw new ParseException();
       }
-      jjtree.closeNodeScope(jjtn000, true);
+      jjtree.closeNodeScope(jjtn000,  b);
       jjtc000 = false;
         jjtn000.setType(t.image);
         jjtn000.setBeginColumn(t.beginColumn);
@@ -275,7 +275,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
         {if (true) return jjtn000;}
     } finally {
       if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
+        jjtree.closeNodeScope(jjtn000,  b);
       }
     }
     throw new Error("Missing return statement in function");

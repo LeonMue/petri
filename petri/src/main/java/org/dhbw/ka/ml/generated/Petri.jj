@@ -239,7 +239,7 @@ SimpleNode type_identifier()       :
 }
 {
     (
-    t=primitive_type()
+    t=primitive_type(false)
     |
     t=identifier(false)
     ) { return t; }
@@ -254,15 +254,15 @@ Token field_annotation()       :
     (t=<DELETED>) { return t; }
 }
 
-ASTPrimitiveType primitive_type()                :
-{/*@bgen(jjtree) PrimitiveType */
+ASTPrimitiveType primitive_type(boolean b)                   :
+{/*@bgen(jjtree) #PrimitiveType( b) */
     ASTPrimitiveType jjtn000 = new ASTPrimitiveType(JJTPRIMITIVETYPE);
     boolean jjtc000 = true;
     jjtree.openNodeScope(jjtn000);
 /*@egen*/
     Token t;
 }
-{/*@bgen(jjtree) PrimitiveType */
+{/*@bgen(jjtree) #PrimitiveType( b) */
     try {
 /*@egen*/
     (
@@ -279,7 +279,7 @@ ASTPrimitiveType primitive_type()                :
     t=<STRING>
     )/*@bgen(jjtree)*/
     {
-      jjtree.closeNodeScope(jjtn000, true);
+      jjtree.closeNodeScope(jjtn000,  b);
       jjtc000 = false;
     }
 /*@egen*/
@@ -291,7 +291,7 @@ ASTPrimitiveType primitive_type()                :
     }/*@bgen(jjtree)*/
     } finally {
       if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
+        jjtree.closeNodeScope(jjtn000,  b);
       }
     }
 /*@egen*/

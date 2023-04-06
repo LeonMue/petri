@@ -38,7 +38,6 @@ public class IsDeclaredSemanticTest {
         final var filePath = Paths.get(this.basePath.toString(), filename);
         final var parser = new Petri(new FileReader(filePath.toFile()));
         final var root = parser.root();
-        root.dump("");
 
         Assertions.assertThrows(TypeNotDeclaredException.class, () -> IsDeclaredSemantic.check(root));
     }
