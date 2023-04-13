@@ -67,9 +67,11 @@ public class Main {
 
         // semantic checking
         rootNode.jjtAccept(new ScopedIdentDuplications(), null);
+        IsDeclaredSemantic.check(rootNode);
 
         // modify field numbers
-        rootNode.jjtAccept(new AssignFieldNumbers(), null);
+        // TODO: delete
+        // rootNode.jjtAccept(new AssignFieldNumbers(), null);
 
         // generate for java?
         final var javaOutputHasSet = cmd.hasOption(javaOutOption);
@@ -92,8 +94,6 @@ public class Main {
                     generationPath,
                     javaPackage
             ), null);
-
-            IsDeclaredSemantic.check(rootNode);
         }
     }
 
