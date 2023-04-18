@@ -35,17 +35,11 @@ public class ComplexObjectField implements PetriSerializable {
                 dataInput
         ));
         out.write(String.format(
-                "final %s deserialized = %s.deserialize(new org.dhbw.ka.ml.petrilib.io.ReadTrackingDataInput(%s), serializedLength);",
+                "final %s deserialized = %s.yyDeserialize(%s, serializedLength);",
                 this.typeIdent,
                 this.typeIdent,
                 dataInput
         ));
-        if (dataInput.equals("readTrackingIn")) {
-            out.write(String.format(
-                    "%s.addToWasRead(serializedLength);",
-                    dataInput
-            ));
-        }
         return "deserialized";
     }
 

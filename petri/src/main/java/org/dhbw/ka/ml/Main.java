@@ -18,7 +18,7 @@ public class Main {
         final var options = new Options();
 
         final var psdPathOption = Option.builder()
-                .longOpt("psd-path")
+                .longOpt("petri-file")
                 .hasArg()
                 .type(Path.class)
                 .required()
