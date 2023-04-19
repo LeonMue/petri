@@ -21,7 +21,10 @@ public class SyntaxTest {
             "nothing.petri",
             "more_complex.petri",
             "semantic_valid_complex_object_types.petri",
-            "lists_syntax.petri"
+            "lists_syntax.petri",
+            "valid_lists_is_declared_semantic.petri",
+            "invalid_lists_is_declared_semantic.petri",
+            "invalid_nested_lists_is_declared_semantic.petri"
     })
     void validFiles_should_notThrowParseException(String filename) throws FileNotFoundException {
         var filePath = Paths.get(this.basePath.toString(), filename);

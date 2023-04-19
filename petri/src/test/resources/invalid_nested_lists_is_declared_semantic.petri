@@ -1,0 +1,3 @@
+struct T {
+    list<list<list<list<list<T1>>>>> l;
+}

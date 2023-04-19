@@ -7,14 +7,13 @@ import org.dhbw.ka.ml.generated.Petri;
 import org.dhbw.ka.ml.semantic.IsDeclaredSemantic;
 import org.dhbw.ka.ml.semantic.scopeduplications.ScopedIdentDuplications;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException, org.dhbw.ka.ml.generated.ParseException {
+    public static void main(String[] args) {
         final var options = new Options();
 
         final var psdPathOption = Option.builder()
@@ -61,40 +60,46 @@ public class Main {
 
         final var psdPathValue = cmd.getOptionValue(psdPathOption);
 
-        // parse psd file
-        final var petriParser = new Petri(new FileReader(psdPathValue));
-        final var rootNode = petriParser.root();
+        try {
+            // parse tree
+            final var petriParser = new Petri(new FileReader(psdPathValue));
+            final var rootNode = petriParser.root();
 
-        // semantic checking
-        rootNode.jjtAccept(new ScopedIdentDuplications(), null);
-        IsDeclaredSemantic.check(rootNode);
+            // semantic checking
+            rootNode.jjtAccept(new ScopedIdentDuplications(), null);
+            IsDeclaredSemantic.check(rootNode);
+
+            // generate for java?
+            final var javaOutputHasSet = cmd.hasOption(javaOutOption);
+            final var javaPackageHasSet = cmd.hasOption(javaPackageOption);
+
+            if (javaOutputHasSet ^ javaPackageHasSet) {
+                System.out.println("It is required to set both 'java-out' and 'java-package' option if you " +
+                        "use one of them...");
+                System.exit(1);
+            }
+
+            if (javaOutputHasSet) {
+                final var outputPath = cmd.getOptionValue(javaOutOption);
+                final var javaPackage = cmd.getOptionValue(javaPackageOption);
+
+                final var generationPath = Paths.get(outputPath);
+                generationPath.toFile().mkdirs();
+
+                rootNode.jjtAccept(new JavaCodeGenerator(
+                        generationPath,
+                        javaPackage
+                ), null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
 
         // modify field numbers
         // TODO: delete
         // rootNode.jjtAccept(new AssignFieldNumbers(), null);
-
-        // generate for java?
-        final var javaOutputHasSet = cmd.hasOption(javaOutOption);
-        final var javaPackageHasSet = cmd.hasOption(javaPackageOption);
-
-        if (javaOutputHasSet ^ javaPackageHasSet) {
-            System.out.println("It is required to set both 'java-out' and 'java-package' option if you " +
-                    "use one of them...");
-            System.exit(1);
-        }
-
-        if (javaOutputHasSet) {
-            final var outputPath = cmd.getOptionValue(javaOutOption);
-            final var javaPackage = cmd.getOptionValue(javaPackageOption);
-
-            final var generationPath = Paths.get(outputPath);
-            generationPath.toFile().mkdirs();
-
-            rootNode.jjtAccept(new JavaCodeGenerator(
-                    generationPath,
-                    javaPackage
-            ), null);
-        }
     }
 
 }

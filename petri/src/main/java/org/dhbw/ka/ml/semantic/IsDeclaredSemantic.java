@@ -106,7 +106,6 @@ public class IsDeclaredSemantic {
         @Override
         public Object visit(ASTIdentifier node, Object data) {
             final var symbolTable = (Set<String>) data;
-            final var nodeIdent = node.getIdent();
             if (!symbolTable.contains(node.getIdent())) {
                 throw new TypeNotDeclaredException(String.format(
                         "[line: %d, column: %d] Type '%s' is not declared. Consider to declare types in order to use them.",
@@ -120,6 +119,7 @@ public class IsDeclaredSemantic {
 
         @Override
         public Object visit(ASTList node, Object data) {
+            node.getInnerType().jjtAccept(this, data);
             return null;
         }
     }

@@ -19,7 +19,8 @@ public class IsDeclaredSemanticTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "semantic_valid_complex_object_types.petri"
+            "semantic_valid_complex_object_types.petri",
+            "valid_lists_is_declared_semantic.petri"
     })
     void validFiles_should_notThrowTypeNotDeclaredException(String filename) throws FileNotFoundException, ParseException {
         final var filePath = Paths.get(this.basePath.toString(), filename);
@@ -32,7 +33,9 @@ public class IsDeclaredSemanticTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "semantic_invalid_complex_object_types.petri",
-            "duplicated_field_ident_complex_object_type.petri"
+            "duplicated_field_ident_complex_object_type.petri",
+            "invalid_lists_is_declared_semantic.petri",
+            "invalid_nested_lists_is_declared_semantic.petri"
     })
     void invalidFiles_should_throwTypeNotDeclaredException(String filename) throws FileNotFoundException, ParseException {
         final var filePath = Paths.get(this.basePath.toString(), filename);
