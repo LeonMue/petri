@@ -8,7 +8,7 @@ import org.dhbw.ka.ml.generated.*;
 import java.io.*;
 
 @RequiredArgsConstructor
-public class NewDeserializeMethodGenerator {
+public class DeserializeMethodGenerator {
 
     private final Writer out;
 

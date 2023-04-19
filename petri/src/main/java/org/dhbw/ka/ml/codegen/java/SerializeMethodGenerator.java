@@ -8,7 +8,7 @@ import org.dhbw.ka.ml.generated.*;
 import java.io.Writer;
 
 @RequiredArgsConstructor
-public class NewSerializeMethodGenerator {
+public class SerializeMethodGenerator {
 
     private final Writer out;
 

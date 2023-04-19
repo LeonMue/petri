@@ -44,8 +44,8 @@ public class JavaCodeGenerator implements PetriVisitor {
                     nodeIdent
             ));
             node.childrenAccept(this, null);
-            new NewSerializeMethodGenerator(this.out).generate(node);
-            new NewDeserializeMethodGenerator(this.out).generate(node);
+            new SerializeMethodGenerator(this.out).generate(node);
+            new DeserializeMethodGenerator(this.out).generate(node);
             new InternalDeserializeMethodGenerator(this.out).generate(node);
             // node.childrenAccept(new MethodSerialize(this.out), null);
             // node.childrenAccept(new MethodDeserialize(this.out, nodeIdent), null);
