@@ -29,11 +29,6 @@ public class ScopedIdentDuplications implements PetriVisitor {
     }
 
     @Override
-    public Object visit(ASTParentIdentifier node, Object data) {
-        return null;
-    }
-
-    @Override
     public Object visit(ASTfields node, Object data) {
         final var symbolTable = new HashSet<String>();
         return node.childrenAccept(new ScopedFieldIdentDuplications(), symbolTable);

@@ -1,0 +1,9 @@
+struct T_1 {
+    T t;
+    T_2 t;
+}
+
+struct T_2 {
+    T t;
+    string t;
+}

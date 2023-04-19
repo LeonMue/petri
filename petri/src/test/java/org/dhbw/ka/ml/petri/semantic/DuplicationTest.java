@@ -28,7 +28,11 @@ public class DuplicationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "duplicated_field_ident.petri", "duplicated_struct_decls.petri" })
+    @ValueSource(strings = {
+            "duplicated_field_ident.petri",
+            "duplicated_struct_decls.petri",
+            "duplicated_field_ident_complex_object_type.petri"
+    })
     void invalidFiles_should_throwIdentifierAlreadyDeclaredException(String filename) throws FileNotFoundException, ParseException {
         var filePath = Paths.get(this.basePath.toString(), filename);
         var parser = new Petri(new FileReader(filePath.toFile()));

@@ -8,8 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JavaCodeGenerator implements PetriVisitor {
@@ -35,25 +33,27 @@ public class JavaCodeGenerator implements PetriVisitor {
 
     @Override
     public Object visit(ASTstruct node, Object data) {
-        final var nodeIdent = ((List<String>) node.childrenAccept(new GetNodeIdentifier(), new ArrayList<String>())).get(0);
+        final var nodeIdent = node.getIdent().getIdent();
         final var filePath = Paths.get(this.outPath.toString(), nodeIdent + ".java");
         try (final var out = new BufferedWriter(new FileWriter(filePath.toFile()))) {
             this.out = out;
             this.out.write(String.format("package %s;", this.javaPackage));
             this.out.write("import java.io.*;");
-            this.out.write(String.format("public class %s {", nodeIdent));
+            this.out.write(String.format(
+                    "public class %s {",
+                    nodeIdent
+            ));
             node.childrenAccept(this, null);
-            node.childrenAccept(new MethodSerialize(this.out), null);
-            node.childrenAccept(new MethodDeserialize(this.out, nodeIdent), null);
+            new SerializeMethodGenerator(this.out).generate(node);
+            new DeserializeMethodGenerator(this.out).generate(node);
+            new InternalDeserializeMethodGenerator(this.out).generate(node);
+            // node.childrenAccept(new MethodSerialize(this.out), null);
+            // node.childrenAccept(new MethodDeserialize(this.out, nodeIdent), null);
+            // new InternalDeserializeMethod(this.out).generate(node);
             out.write("}");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return null;
-    }
-
-    @Override
-    public Object visit(ASTParentIdentifier node, Object data) {
         return null;
     }
 

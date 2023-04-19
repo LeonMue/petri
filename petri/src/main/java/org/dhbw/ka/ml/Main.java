@@ -4,6 +4,7 @@ import org.apache.commons.cli.*;
 import org.dhbw.ka.ml.astmodification.AssignFieldNumbers;
 import org.dhbw.ka.ml.codegen.java.JavaCodeGenerator;
 import org.dhbw.ka.ml.generated.Petri;
+import org.dhbw.ka.ml.semantic.IsDeclaredSemantic;
 import org.dhbw.ka.ml.semantic.scopeduplications.ScopedIdentDuplications;
 
 import java.io.FileNotFoundException;
@@ -17,7 +18,7 @@ public class Main {
         final var options = new Options();
 
         final var psdPathOption = Option.builder()
-                .longOpt("psd-path")
+                .longOpt("petri-file")
                 .hasArg()
                 .type(Path.class)
                 .required()
@@ -66,9 +67,11 @@ public class Main {
 
         // semantic checking
         rootNode.jjtAccept(new ScopedIdentDuplications(), null);
+        IsDeclaredSemantic.check(rootNode);
 
         // modify field numbers
-        rootNode.jjtAccept(new AssignFieldNumbers(), null);
+        // TODO: delete
+        // rootNode.jjtAccept(new AssignFieldNumbers(), null);
 
         // generate for java?
         final var javaOutputHasSet = cmd.hasOption(javaOutOption);
@@ -91,14 +94,6 @@ public class Main {
                     generationPath,
                     javaPackage
             ), null);
-
-            /*rootNode.jjtAccept(
-                    new JavaGenVisitor(
-                            generationPath,
-                            javaPackage
-                    ),
-                    null
-            );*/
         }
     }
 

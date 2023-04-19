@@ -1,0 +1,9 @@
+struct T_1 {
+    string s;
+    T_2 t2;
+}
+
+struct T_2 {
+    T_1 t1;
+    int32 i;
+}
