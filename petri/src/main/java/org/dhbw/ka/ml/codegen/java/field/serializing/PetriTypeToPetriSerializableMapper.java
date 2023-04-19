@@ -70,5 +70,10 @@ public class PetriTypeToPetriSerializableMapper implements Function<SimpleNode, 
             this.result = new ComplexObjectField(node.getIdent());
             return null;
         }
+
+        @Override
+        public Object visit(ASTList node, Object data) {
+            return null;
+        }
     }
 }

@@ -56,4 +56,9 @@ public class ScopedFieldIdentDuplications implements PetriVisitor {
     public Object visit(ASTIdentifier node, Object data) {
         return null;
     }
+
+    @Override
+    public Object visit(ASTList node, Object data) {
+        return null;
+    }
 }

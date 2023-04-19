@@ -147,6 +147,11 @@ public class SerializeMethodGenerator {
         public Object visit(ASTIdentifier node, Object data) {
             return null;
         }
+
+        @Override
+        public Object visit(ASTList node, Object data) {
+            return null;
+        }
     }
 
     private class FieldCounter implements PetriVisitor {
@@ -189,6 +194,11 @@ public class SerializeMethodGenerator {
 
         @Override
         public Object visit(ASTIdentifier node, Object data) {
+            return null;
+        }
+
+        @Override
+        public Object visit(ASTList node, Object data) {
             return null;
         }
     }

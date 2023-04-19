@@ -61,6 +61,11 @@ public class FieldTypeIdent {
             this.result = new Result(true, node.getIdent());
             return null;
         }
+
+        @Override
+        public Object visit(ASTList node, Object data) {
+            return null;
+        }
     }
 
 }

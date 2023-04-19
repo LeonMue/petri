@@ -58,6 +58,11 @@ public class IsDeclaredSemantic {
         public Object visit(ASTIdentifier node, Object data) {
             return null;
         }
+
+        @Override
+        public Object visit(ASTList node, Object data) {
+            return null;
+        }
     }
 
     private static class FieldTypeVisitor implements PetriVisitor {
@@ -110,6 +115,11 @@ public class IsDeclaredSemantic {
                         node.getIdent()
                 ));
             }
+            return null;
+        }
+
+        @Override
+        public Object visit(ASTList node, Object data) {
             return null;
         }
     }

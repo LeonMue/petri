@@ -1,0 +1,6 @@
+struct T {
+    list<int32> l1;
+    list<T> l2;
+    list<list<string>> l3;
+    list<list<float64>> l4;
+}

@@ -30,6 +30,7 @@ TOKEN : {
 |   < FLOAT32: "float32" >
 |   < FLOAT64: "float64" >
 |   < STRING: "string" >
+|   < LIST: "list" >
 |   < DELETED: "@deleted" >
 }
 
@@ -91,8 +92,9 @@ SimpleNode type_identifier() #void :
     t=primitive_type(false)
     |
     t=identifier(false)
+    |
+    t=list()
     ) { return t; }
-    // | <LIST> "<" type_identifier() ">"
 }
 
 Token field_annotation() #void :
@@ -141,4 +143,9 @@ ASTIdentifier identifier(boolean b) #Identifier(b) :
         jjtThis.setBeginLine(t.beginLine);
         return jjtThis;
     }
+}
+
+ASTList list() #List : {}
+{
+    <LIST> "<" type_identifier() ">" { return jjtThis; }
 }

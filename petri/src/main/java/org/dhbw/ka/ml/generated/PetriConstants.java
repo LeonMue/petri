@@ -27,17 +27,19 @@ public interface PetriConstants {
   /** RegularExpression Id. */
   int STRING = 12;
   /** RegularExpression Id. */
-  int DELETED = 13;
+  int LIST = 13;
   /** RegularExpression Id. */
-  int DIGIT = 14;
+  int DELETED = 14;
   /** RegularExpression Id. */
-  int DIGITS = 15;
+  int DIGIT = 15;
   /** RegularExpression Id. */
-  int LETTER = 16;
+  int DIGITS = 16;
   /** RegularExpression Id. */
-  int ID_ANY = 17;
+  int LETTER = 17;
   /** RegularExpression Id. */
-  int ID = 18;
+  int ID_ANY = 18;
+  /** RegularExpression Id. */
+  int ID = 19;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -57,6 +59,7 @@ public interface PetriConstants {
     "\"float32\"",
     "\"float64\"",
     "\"string\"",
+    "\"list\"",
     "\"@deleted\"",
     "<DIGIT>",
     "<DIGITS>",
@@ -67,6 +70,8 @@ public interface PetriConstants {
     "\"{\"",
     "\"}\"",
     "\";\"",
+    "\"<\"",
+    "\">\"",
   };
 
 }

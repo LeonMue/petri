@@ -20,7 +20,8 @@ public class SyntaxTest {
             "duplicated_field_ident.petri",
             "nothing.petri",
             "more_complex.petri",
-            "semantic_valid_complex_object_types.petri"
+            "semantic_valid_complex_object_types.petri",
+            "lists_syntax.petri"
     })
     void validFiles_should_notThrowParseException(String filename) throws FileNotFoundException {
         var filePath = Paths.get(this.basePath.toString(), filename);
@@ -29,7 +30,7 @@ public class SyntaxTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "key_words_as_identifier.petri", "piano.petri" })
+    @ValueSource(strings = { "key_words_as_identifier.petri", "piano.petri", "invalid_lists_syntax.petri" })
     void invalidFiles_should_throwException(String filename) throws FileNotFoundException {
         var filePath = Paths.get(this.basePath.toString(), filename);
         var parser = new Petri(new FileReader(filePath.toFile()));
