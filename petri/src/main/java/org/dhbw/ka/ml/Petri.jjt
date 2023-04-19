@@ -145,7 +145,10 @@ ASTIdentifier identifier(boolean b) #Identifier(b) :
     }
 }
 
-ASTList list() #List : {}
+ASTList list() #List :
 {
-    <LIST> "<" type_identifier() ">" { return jjtThis; }
+    SimpleNode t;
+}
+{
+    <LIST> "<" t=type_identifier() ">" { jjtThis.setInnerType(t); return jjtThis; }
 }

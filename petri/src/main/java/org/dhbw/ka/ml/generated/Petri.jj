@@ -330,20 +330,23 @@ ASTIdentifier identifier(boolean b)                :
 /*@egen*/
 }
 
-ASTList list()       : {/*@bgen(jjtree) List */
-  ASTList jjtn000 = new ASTList(JJTLIST);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
+ASTList list()       :
+{/*@bgen(jjtree) List */
+    ASTList jjtn000 = new ASTList(JJTLIST);
+    boolean jjtc000 = true;
+    jjtree.openNodeScope(jjtn000);
+/*@egen*/
+    SimpleNode t;
+}
 {/*@bgen(jjtree) List */
     try {
 /*@egen*/
-    <LIST> "<" type_identifier() ">"/*@bgen(jjtree)*/
-                                     {
-                                       jjtree.closeNodeScope(jjtn000, true);
-                                       jjtc000 = false;
-                                     }
-/*@egen*/ { return jjtn000; }/*@bgen(jjtree)*/
+    <LIST> "<" t=type_identifier() ">"/*@bgen(jjtree)*/
+                                       {
+                                         jjtree.closeNodeScope(jjtn000, true);
+                                         jjtc000 = false;
+                                       }
+/*@egen*/ { jjtn000.setInnerType(t); return jjtn000; }/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);

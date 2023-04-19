@@ -307,18 +307,18 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
   }
 
   final public ASTList list() throws ParseException {
-                        /*@bgen(jjtree) List */
-  ASTList jjtn000 = new ASTList(JJTLIST);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+ /*@bgen(jjtree) List */
+    ASTList jjtn000 = new ASTList(JJTLIST);
+    boolean jjtc000 = true;
+    jjtree.openNodeScope(jjtn000);SimpleNode t;
     try {
       jj_consume_token(LIST);
       jj_consume_token(24);
-      type_identifier();
+      t = type_identifier();
       jj_consume_token(25);
-                                       jjtree.closeNodeScope(jjtn000, true);
-                                       jjtc000 = false;
-                                       {if (true) return jjtn000;}
+                                         jjtree.closeNodeScope(jjtn000, true);
+                                         jjtc000 = false;
+                                         jjtn000.setInnerType(t); {if (true) return jjtn000;}
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
