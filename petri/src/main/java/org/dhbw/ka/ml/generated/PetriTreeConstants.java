@@ -11,6 +11,7 @@ public interface PetriTreeConstants
   public int JJTFIELD = 5;
   public int JJTPRIMITIVETYPE = 6;
   public int JJTIDENTIFIER = 7;
+  public int JJTLIST = 8;
 
 
   public String[] jjtNodeName = {
@@ -22,6 +23,7 @@ public interface PetriTreeConstants
     "field",
     "PrimitiveType",
     "Identifier",
+    "List",
   };
 }
-/* JavaCC - OriginalChecksum=646265dcafe948e25e727ea0b162fa25 (do not edit this line) */
+/* JavaCC - OriginalChecksum=70b0833f5f811507087436038277786c (do not edit this line) */

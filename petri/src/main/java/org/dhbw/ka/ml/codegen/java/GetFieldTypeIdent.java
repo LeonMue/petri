@@ -1,34 +1,25 @@
-package org.dhbw.ka.ml.codegen.java.field.serializing;
+package org.dhbw.ka.ml.codegen.java;
 
 import org.dhbw.ka.ml.generated.*;
 
-import java.util.Map;
 import java.util.function.Function;
 
-import static java.util.Map.entry;
+public class GetFieldTypeIdent {
 
-public class PetriTypeToPetriSerializableMapper implements Function<SimpleNode, PetriSerializable> {
-
-    @Override
-    public PetriSerializable apply(SimpleNode type) {
+    public static String getFieldTypeIdent(SimpleNode typeNode, Function<String, String> mapper) {
         final var internalVisitor = new InternalVisitor();
-        type.jjtAccept(internalVisitor, null);
-        return internalVisitor.result;
+        typeNode.jjtAccept(internalVisitor, mapper);
+
+        return internalVisitor.identResult.toString();
     }
 
     private static class InternalVisitor implements PetriVisitor {
 
-        private static final Map<String, PetriSerializable> PRIMITIVE_TYPE_TO_PETRI_SERIALIZABLE_MAPPING = Map.ofEntries(
-                entry("bool", new BoolField()),
-                entry("int32", new IntField()),
-                entry("int64", new LongField()),
-                entry("float32", new FloatField()),
-                entry("float64", new DoubleField()),
-                entry("string", new StringField())
-        );
+        private static final PrimitivePetriTypeToPrimitiveJavaTypeMapper PRIMITIVE_PETRI_TYPE_TO_PRIMITIVE_JAVA_TYPE_MAPPER = new PrimitivePetriTypeToPrimitiveJavaTypeMapper();
 
-        private PetriSerializable result;
+        private static final PrimitivePetriTypeToComplexJavaTypeMapper PRIMITIVE_PETRI_TYPE_TO_COMPLEX_JAVA_TYPE_MAPPER = new PrimitivePetriTypeToComplexJavaTypeMapper();
 
+        private final StringBuilder identResult = new StringBuilder();
         @Override
         public Object visit(SimpleNode node, Object data) {
             return null;
@@ -61,20 +52,25 @@ public class PetriTypeToPetriSerializableMapper implements Function<SimpleNode, 
 
         @Override
         public Object visit(ASTPrimitiveType node, Object data) {
-            this.result = PRIMITIVE_TYPE_TO_PETRI_SERIALIZABLE_MAPPING.get(node.getType());
+            final var typeMapper = (Function<String, String>) data;
+            final var type = typeMapper.apply(node.getType());
+            this.identResult.append(type);
             return null;
         }
 
         @Override
         public Object visit(ASTIdentifier node, Object data) {
-            this.result = new ComplexObjectField(node.getIdent());
+            this.identResult.append(node.getIdent());
             return null;
         }
 
         @Override
         public Object visit(ASTList node, Object data) {
-            this.result = new ListField(node);
+            this.identResult.append("List<");
+            node.getInnerType().jjtAccept(this, PRIMITIVE_PETRI_TYPE_TO_COMPLEX_JAVA_TYPE_MAPPER);
+            this.identResult.append(">");
             return null;
         }
     }
+
 }

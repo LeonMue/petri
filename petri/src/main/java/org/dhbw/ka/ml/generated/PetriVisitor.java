@@ -11,5 +11,6 @@ public interface PetriVisitor
   public Object visit(ASTfield node, Object data);
   public Object visit(ASTPrimitiveType node, Object data);
   public Object visit(ASTIdentifier node, Object data);
+  public Object visit(ASTList node, Object data);
 }
-/* JavaCC - OriginalChecksum=65c5214c7fe999d7cfcb4369077e80b0 (do not edit this line) */
+/* JavaCC - OriginalChecksum=b128933694e8d2e898e9e87b64cb1aa4 (do not edit this line) */

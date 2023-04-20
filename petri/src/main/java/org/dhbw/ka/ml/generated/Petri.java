@@ -85,15 +85,15 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
       jj_consume_token(STRUCT);
       ident = identifier(false);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 19:
-        jj_consume_token(19);
+      case 20:
+        jj_consume_token(20);
         parent = identifier(false);
         break;
       default:
         jj_la1[1] = jj_gen;
         ;
       }
-      jj_consume_token(20);
+      jj_consume_token(21);
                                                                              ASTfields jjtn001 = new ASTfields(JJTFIELDS);
                                                                              boolean jjtc001 = true;
                                                                              jjtree.openNodeScope(jjtn001);
@@ -107,6 +107,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
           case FLOAT32:
           case FLOAT64:
           case STRING:
+          case LIST:
           case DELETED:
           case ID:
             ;
@@ -136,7 +137,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
                                                                                jjtree.closeNodeScope(jjtn001, true);
                                                                              }
       }
-      jj_consume_token(21);
+      jj_consume_token(22);
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
         jjtn000.setIdent(ident);
@@ -180,7 +181,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
       }
       type = type_identifier();
       ident = identifier(false);
-      jj_consume_token(22);
+      jj_consume_token(23);
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;
         jjtn000.setDeleted(t != null);
@@ -220,6 +221,9 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
       break;
     case ID:
       t = identifier(false);
+      break;
+    case LIST:
+      t = list();
       break;
     default:
       jj_la1[4] = jj_gen;
@@ -302,6 +306,41 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
     throw new Error("Missing return statement in function");
   }
 
+  final public ASTList list() throws ParseException {
+ /*@bgen(jjtree) List */
+    ASTList jjtn000 = new ASTList(JJTLIST);
+    boolean jjtc000 = true;
+    jjtree.openNodeScope(jjtn000);SimpleNode t;
+    try {
+      jj_consume_token(LIST);
+      jj_consume_token(24);
+      t = type_identifier();
+      jj_consume_token(25);
+                                         jjtree.closeNodeScope(jjtn000, true);
+                                         jjtc000 = false;
+                                         jjtn000.setInnerType(t); {if (true) return jjtn000;}
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        {if (true) throw (RuntimeException)jjte000;}
+      }
+      if (jjte000 instanceof ParseException) {
+        {if (true) throw (ParseException)jjte000;}
+      }
+      {if (true) throw (Error)jjte000;}
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
   /** Generated Token Manager. */
   public PetriTokenManager token_source;
   SimpleCharStream jj_input_stream;
@@ -317,7 +356,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x40,0x80000,0x43f80,0x2000,0x41f80,0x1f80,};
+      jj_la1_0 = new int[] {0x40,0x100000,0x87f80,0x4000,0x83f80,0x1f80,};
    }
 
   /** Constructor with InputStream. */
@@ -437,7 +476,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[23];
+    boolean[] la1tokens = new boolean[26];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -451,7 +490,7 @@ public class Petri/*@bgen(jjtree)*/implements PetriTreeConstants, PetriConstants
         }
       }
     }
-    for (int i = 0; i < 23; i++) {
+    for (int i = 0; i < 26; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

@@ -1,0 +1,13 @@
+struct T1 {
+    list<T1> l1;
+    list<list<int32>> l2;
+    list<T2> l3;
+    list<list<list<list<T3>>>> l4;
+}
+
+struct T2 {
+    list<T1> l1;
+}
+
+struct T3 {
+}
