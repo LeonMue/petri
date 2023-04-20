@@ -7,7 +7,6 @@ import org.dhbw.ka.ml.codegen.java.PrimitivePetriTypeToComplexJavaTypeMapper;
 import org.dhbw.ka.ml.generated.*;
 
 import java.io.Writer;
-import java.util.ArrayList;
 
 @RequiredArgsConstructor
 public class ListField implements PetriSerializable {
@@ -66,14 +65,6 @@ public class ListField implements PetriSerializable {
                 YY_LIST_LENGTH,
                 dataInput
         ));
-        final var typeIdent = GetFieldTypeIdent.getFieldTypeIdent(this.listTree, PRIMITIVE_PETRI_TYPE_TO_COMPLEX_JAVA_TYPE_MAPPER);
-        out.write(String.format(
-                "final %s %s = new Array%s(%s);",
-                typeIdent,
-                YY_DESERIALIZED_LIST,
-                typeIdent,
-                YY_LIST_LENGTH
-        ));
         out.write(String.format(
                 "for (int %s = 0; %s < %s; %s++) {",
                 YY_ITERATION_VAR,
@@ -81,7 +72,7 @@ public class ListField implements PetriSerializable {
                 YY_LIST_LENGTH,
                 YY_ITERATION_VAR
         ));
-        this.listTree.getInnerType().jjtAccept(new DeserializeVisitor(dataInput, YY_DESERIALIZED_LIST, out), null);
+        this.listTree.getInnerType().jjtAccept(new SkipVisitor(dataInput, out), null);
         out.write("}");  // for
     }
 
@@ -313,15 +304,12 @@ public class ListField implements PetriSerializable {
 
         private final String dataInput;
 
-        private String parentList;
-
         private final Writer out;
 
         private int recursiveListCounter = 0;
 
-        public SkipVisitor(String dataInput, String parentList, Writer out) {
+        public SkipVisitor(String dataInput, Writer out) {
             this.dataInput = dataInput;
-            this.parentList = parentList;
             this.out = out;
         }
 
@@ -358,39 +346,23 @@ public class ListField implements PetriSerializable {
         @SneakyThrows
         @Override
         public Object visit(ASTPrimitiveType node, Object data) {
-            final var deserialized = PETRI_TYPE_TO_PETRI_SERIALIZABLE_MAPPER.apply(node).deserializeDataInput(this.dataInput, this.out);
-            this.out.write(String.format(
-                    "%s.add(%s);",
-                    this.parentList,
-                    deserialized
-            ));
+            PETRI_TYPE_TO_PETRI_SERIALIZABLE_MAPPER.apply(node).skip(this.dataInput, this.out);
             return null;
         }
 
         @SneakyThrows
         @Override
         public Object visit(ASTIdentifier node, Object data) {
-            final var deserialized = PETRI_TYPE_TO_PETRI_SERIALIZABLE_MAPPER.apply(node).deserializeDataInput(this.dataInput, this.out);
-            this.out.write(String.format(
-                    "%s.add(%s);",
-                    this.parentList,
-                    deserialized
-            ));
+            PETRI_TYPE_TO_PETRI_SERIALIZABLE_MAPPER.apply(node).skip(this.dataInput, this.out);
             return null;
         }
 
         @SneakyThrows
         @Override
         public Object visit(ASTList node, Object data) {
-            final var typeIdent = GetFieldTypeIdent.getFieldTypeIdent(node, PRIMITIVE_PETRI_TYPE_TO_COMPLEX_JAVA_TYPE_MAPPER);
             final var uniqueLengthVariable = String.format(
                     "%s%d",
                     YY_LIST_LENGTH,
-                    this.recursiveListCounter
-            );
-            final var childListIdent = String.format(
-                    "%s%d",
-                    YY_DESERIALIZED_LIST,
                     this.recursiveListCounter
             );
             final var uniqueIterationVar = String.format(
@@ -403,19 +375,6 @@ public class ListField implements PetriSerializable {
                     uniqueLengthVariable,
                     dataInput
             ));
-            out.write(String.format(
-                    "final %s %s = new Array%s(%s);",
-                    typeIdent,
-                    childListIdent,
-                    typeIdent,
-                    uniqueLengthVariable
-            ));
-
-            out.write(String.format(
-                    "%s.add(%s);",
-                    this.parentList,
-                    childListIdent
-            ));
 
             out.write(String.format(
                     "for (int %s = 0; %s < %s; %s++) {",
@@ -424,7 +383,6 @@ public class ListField implements PetriSerializable {
                     uniqueLengthVariable,
                     uniqueIterationVar
             ));
-            this.parentList = childListIdent;
             this.recursiveListCounter++;
             node.getInnerType().jjtAccept(this, null);
             out.write("}");  // for

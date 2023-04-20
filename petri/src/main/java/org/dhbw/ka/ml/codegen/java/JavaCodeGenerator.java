@@ -43,7 +43,7 @@ public class JavaCodeGenerator implements PetriVisitor {
             this.out.write("import java.util.List;");
             this.out.write("import java.util.ArrayList;");
             this.out.write(String.format(
-                    "public class %s {",
+                    "@lombok.EqualsAndHashCode public class %s {",  // TODO: remove annotation (this was for tests)
                     nodeIdent
             ));
             node.childrenAccept(this, null);
@@ -67,6 +67,9 @@ public class JavaCodeGenerator implements PetriVisitor {
     @Override
     public Object visit(ASTfield node, Object data) {
         final var generators = new FieldGenerators().getGenerators(node.getType(), node.getIdent().getIdent());
+        if (node.isDeleted()) {
+            return null;
+        }
         generators.generateFieldDecl().generate(this.out);
         generators.generateHasField().generate(this.out);
         generators.generateGetMethod().generate(this.out);
