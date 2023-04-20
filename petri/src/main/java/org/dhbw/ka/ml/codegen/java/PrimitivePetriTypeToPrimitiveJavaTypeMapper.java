@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 import static java.util.Map.entry;
 
-public class PetriTypeToJavaTypeMapper implements Function<String, String> {
+public class PrimitivePetriTypeToPrimitiveJavaTypeMapper implements Function<String, String> {
 
     private static Map<String, String> typeMapping = Map.ofEntries(
             entry("bool", "boolean"),

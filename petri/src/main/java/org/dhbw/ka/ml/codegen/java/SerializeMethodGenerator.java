@@ -74,6 +74,8 @@ public class SerializeMethodGenerator {
 
         private int bitField = 0;
 
+        private int fieldCount = 0;
+
         private static final PetriTypeToPetriSerializableMapper PETRI_TYPE_TO_PETRI_SERIALIZABLE_MAPPER = new PetriTypeToPetriSerializableMapper();
 
         @Override
@@ -106,6 +108,13 @@ public class SerializeMethodGenerator {
         public Object visit(ASTfield node, Object data) {
             final var fieldIdent = node.getIdent().getIdent();
             final var fieldIdentUppercase = JavaNameConventions.firstLetterUpperCase(fieldIdent);
+            if (this.fieldCount != 0 && this.fieldCount % MAX_BITS_PER_VECTOR == 0) {
+                out.write(String.format(
+                        "%s[%d] |= 0x80;",
+                        YY_BIT_VECTOR,
+                        this.bitField - 1
+                ));
+            }
             if (!node.isDeleted()) {
                 out.write(String.format(
                         "if (this.has%s()) {",
@@ -128,13 +137,9 @@ public class SerializeMethodGenerator {
 
             this.bitFieldOffset = (this.bitFieldOffset + 1) % MAX_BITS_PER_VECTOR;
             if (this.bitFieldOffset == 0) {
-                out.write(String.format(
-                        "%s[%d] |= 0x80;",
-                        YY_BIT_VECTOR,
-                        this.bitField
-                ));
                 this.bitField++;
             }
+            this.fieldCount++;
             return null;
         }
 

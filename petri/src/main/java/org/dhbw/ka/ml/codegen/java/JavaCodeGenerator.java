@@ -1,6 +1,7 @@
 package org.dhbw.ka.ml.codegen.java;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.dhbw.ka.ml.generated.*;
 
 import java.io.BufferedWriter;
@@ -39,6 +40,8 @@ public class JavaCodeGenerator implements PetriVisitor {
             this.out = out;
             this.out.write(String.format("package %s;", this.javaPackage));
             this.out.write("import java.io.*;");
+            this.out.write("import java.util.List;");
+            this.out.write("import java.util.ArrayList;");
             this.out.write(String.format(
                     "public class %s {",
                     nodeIdent
@@ -47,9 +50,6 @@ public class JavaCodeGenerator implements PetriVisitor {
             new SerializeMethodGenerator(this.out).generate(node);
             new DeserializeMethodGenerator(this.out).generate(node);
             new InternalDeserializeMethodGenerator(this.out).generate(node);
-            // node.childrenAccept(new MethodSerialize(this.out), null);
-            // node.childrenAccept(new MethodDeserialize(this.out, nodeIdent), null);
-            // new InternalDeserializeMethod(this.out).generate(node);
             out.write("}");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -59,14 +59,19 @@ public class JavaCodeGenerator implements PetriVisitor {
 
     @Override
     public Object visit(ASTfields node, Object data) {
-        node.childrenAccept(new FieldDeclaration(this.out), null);
-        node.childrenAccept(new Getter(this.out), null);
-        node.childrenAccept(new Setter(this.out), null);
+        node.childrenAccept(this, null);
         return null;
     }
 
+    @SneakyThrows
     @Override
     public Object visit(ASTfield node, Object data) {
+        final var generators = new FieldGenerators().getGenerators(node.getType(), node.getIdent().getIdent());
+        generators.generateFieldDecl().generate(this.out);
+        generators.generateHasField().generate(this.out);
+        generators.generateGetMethod().generate(this.out);
+        generators.generateSetMethod().generate(this.out);
+        generators.generateHasMethod().generate(this.out);
         return null;
     }
 
