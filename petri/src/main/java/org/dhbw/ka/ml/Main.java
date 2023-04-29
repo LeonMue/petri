@@ -17,11 +17,12 @@ public class Main {
         final var options = new Options();
 
         final var psdPathOption = Option.builder()
+                .option("s")
                 .longOpt("petri-file")
                 .hasArg()
                 .type(Path.class)
                 .required()
-                .desc("The path of the .psd file you want to compile.")
+                .desc("The path of the .psdl schema file you want to compile.")
                 .build();
 
         final var javaOutOption = Option.builder()
