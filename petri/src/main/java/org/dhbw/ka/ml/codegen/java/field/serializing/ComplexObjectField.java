@@ -18,7 +18,7 @@ public class ComplexObjectField implements PetriSerializable {
                 value
         ));
         out.write(String.format(
-                "%s.write(serialized.length);",
+                "%s.write(org.dhbw.ka.ml.petrilib.serializing.VarInt.serializeUnsigned(serialized.length));",
                 dataOutput
         ));
         out.write(String.format(
